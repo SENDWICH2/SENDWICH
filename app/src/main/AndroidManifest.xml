@@ -11,8 +11,11 @@
         android:theme="@style/Theme.SENDWICH">
 
         <activity android:name=".PostsActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".WriteActivity"></activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
