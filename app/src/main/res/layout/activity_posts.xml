@@ -43,7 +43,8 @@
 
 
         <ImageButton
-                android:layout_width="50dp"
+            android:id="@+id/postbtn"
+            android:layout_width="50dp"
                 android:layout_height="50dp"
             android:layout_margin="7dp"
               />

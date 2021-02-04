@@ -8,7 +8,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:301634917573:android:f50f79edd927a961b88cac",
+        "mobilesdk_app_id": "1:301634917573:android:91a581bbc351d5bdb88cac",
+        "android_client_info": {
+          "package_name": "com.company.SENDWICH"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301634917573-3oj4fp5t0o48fbeirh8e3ahito9l9mqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlMOoYQhiP7fW--7GozxLd1_o4jtOkIm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301634917573-3oj4fp5t0o48fbeirh8e3ahito9l9mqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301634917573:android:814f4f7906b414bcb88cac",
         "android_client_info": {
           "package_name": "com.example.sendwich"
         }
