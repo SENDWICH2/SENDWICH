@@ -3,6 +3,7 @@ package com.example.sendwich;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -23,10 +24,14 @@ public class WriteActivity extends AppCompatActivity {
     private WriteAdapter mAdapter;
     private int count = -1;
 
+    private TextView delete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
+
+        delete = (TextView)findViewById(R.id.deletebtn);
 
         ActionBar ab = getSupportActionBar();
         ab.hide();  //액션바 숨기기
@@ -51,13 +56,18 @@ public class WriteActivity extends AppCompatActivity {
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count++;
-
                 Dictionary data = new Dictionary();
                 mArrayList.add(data);
 
                 mAdapter.notifyDataSetChanged();
             }
         });
+
+        /*delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
     }
 }
