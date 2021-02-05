@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,12 +13,33 @@
         android:background="#Ffffff"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+>
         <ImageView
             android:id="@+id/pic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:background="#fff000"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/deletebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x"
+            android:layout_marginRight="12dp"
+            android:layout_gravity="right"
+            android:textColor="#FF0000"
+            android:textSize="30sp" />
+        </FrameLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
