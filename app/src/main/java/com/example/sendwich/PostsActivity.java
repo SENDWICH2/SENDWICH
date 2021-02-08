@@ -42,7 +42,6 @@ public class PostsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(PostsActivity.this, WriteActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         mbtn.setOnClickListener(new View.OnClickListener() {
