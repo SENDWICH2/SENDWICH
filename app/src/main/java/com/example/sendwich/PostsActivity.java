@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class PostsActivity extends AppCompatActivity {
 
     ImageButton mPostbtn;
+    ImageButton mbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class PostsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_posts);
 
         mPostbtn = findViewById(R.id.postbtn);
+        mbtn = findViewById(R.id.btn);
 
         ViewPager vp = findViewById(R.id.viewpager);
         VPAdapter adapter = new VPAdapter(getSupportFragmentManager());
@@ -41,6 +43,13 @@ public class PostsActivity extends AppCompatActivity {
                 Intent intent = new Intent(PostsActivity.this, WriteActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        mbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PostsActivity.this, PostClickActivity.class);
+                startActivity(intent);
             }
         });
 
