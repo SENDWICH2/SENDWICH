@@ -29,13 +29,37 @@ public class PostClickAdapter extends BaseAdapter {
         final Context context = parent.getContext();
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_postclick_item, parent, false);
         }
 
         TextView idView = (TextView)convertView.findViewById(R.id.id);
         TextView textView = (TextView)convertView.findViewById(R.id.message);
 
+        PostClickItem postClickItem = postClickItemList.get(position);
 
+        idView.setText(postClickItem.getId());
+        textView.setText(postClickItem.getMessage());
+
+        return convertView;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return postClickItemList.get(position);
+    }
+
+    public void addItem(String id, String message) {
+        PostClickItem item = new PostClickItem();
+
+        item.setId(id);
+        item.setMessage(message);
+
+        postClickItemList.add(item);
     }
 }
