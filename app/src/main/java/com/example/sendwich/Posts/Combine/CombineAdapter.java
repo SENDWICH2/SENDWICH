@@ -1,7 +1,6 @@
 package com.example.sendwich.Posts.Combine;
 
 import android.content.Context;
-import android.media.session.PlaybackState;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class CombineAdapter extends ArrayAdapter implements AdapterView.OnItemCl
 
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            convertView = layoutInflater.inflate(R.layout.list_item, parent, false);
+            convertView = layoutInflater.inflate(R.layout.list_posts_item, parent, false);
         }
 
         viewHolder = new ViewHolder();

@@ -3,6 +3,7 @@ package com.example.sendwich;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class WriteActivity extends AppCompatActivity {
     private int count = -1;
 
     private TextView delete;
+    private Button addbtn;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class WriteActivity extends AppCompatActivity {
                 mLinearLayoutManaget.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        Button addbtn = (Button)findViewById(R.id.addpicbtn);
+        addbtn = (Button)findViewById(R.id.addpicbtn);
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +65,15 @@ public class WriteActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
+
+        back = findViewById(R.id.backbtn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         /*delete.setOnClickListener(new View.OnClickListener() {
             @Override

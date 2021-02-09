@@ -21,6 +21,8 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".WriteActivity"></activity>
         <activity android:name=".PostClickActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ModifyProfileActivity"></activity>
 
         <activity android:name=".LoginActivity">
             <intent-filter>
