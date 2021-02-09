@@ -20,6 +20,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -29,6 +30,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -65,9 +67,12 @@ public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
-    Button btn_save;
+    public static Context mContext;
 
-    MainActivity activity;
+    Button btn_save;
+    Button btn_home;
+
+    public MainActivity activity;
 
     private DatabaseReference mDatabase;
 
@@ -89,12 +94,15 @@ public class MainActivity extends AppCompatActivity
     Location mCurrentLocatiion;
     LatLng currentPosition;
 
+
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Location location;
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
-    // (참고로 Toast에서는 Context가 필요했습니다.)
+    // (참고로 Toast에서는 Context가 필요했습니다.)\
+    private View 	decorView;
+    private int	uiOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +117,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mLayout = findViewById(R.id.layout_main);
+
+        btn_save = findViewById(R.id.button);
+        btn_home = findViewById(R.id.home);
 
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -128,14 +139,23 @@ public class MainActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        /*btn_save.setOnClickListener(new View.OnClickListener() {
+        btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getParent(), PostsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PostsActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         Log.d(TAG, "onMapReady :");

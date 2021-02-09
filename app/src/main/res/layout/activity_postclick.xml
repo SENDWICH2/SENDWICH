@@ -16,11 +16,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-
-
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/back"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,20 +34,39 @@
                     android:layout_height="400dp"
                     android:scaleType="center" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="아이디   yyyy년 mm월 dd일" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="ㅇ너망러ㅣㄴㅇ라ㅣ문ㅇ풀잎"
-                android:textSize="18sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="아이디"
+        android:textColor="#000000" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="yyyy년 mm월 dd일" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="ㅇ너망러ㅣㄴㅇ라ㅣ문ㅇ풀잎"
+            android:textColor="#373737"
+            android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -1,6 +1,9 @@
 package com.example.sendwich;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
@@ -14,12 +17,22 @@ import static com.example.sendwich.PostClick.setListViewHeight.setListViewHeight
 
 public class PostClickActivity extends AppCompatActivity {
 
+    ImageView back;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postclick);
 
         ActionBar ab = getSupportActionBar();
         ab.hide();  //액션바 숨기기
+
+        back = findViewById(R.id.backbtn);  //뒤로가기
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ListView listview;
         PostClickAdapter adapter;
