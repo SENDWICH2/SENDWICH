@@ -14,7 +14,7 @@
         android:theme="@style/Theme.SENDWICH">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC1X_pfcanSHiEh-4GPb7KRA2zEW3wDoq8">
+            android:value="AIzaSyBlMOoYQhiP7fW--7GozxLd1_o4jtOkIm8">
         </meta-data>
         <activity android:name=".PostsActivity"></activity>
         <activity android:name=".MainActivity"></activity>
