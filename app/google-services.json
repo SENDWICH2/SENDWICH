@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "345627301132",
+    "project_id": "sendwich2",
+    "storage_bucket": "sendwich2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345627301132:android:8d925b8ef9b4d465fa6529",
+        "android_client_info": {
+          "package_name": "com.example.sendwich"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345627301132-41e6l5pap6336itp73rddu2mlbohnenn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sendwich",
+            "certificate_hash": "911341b2fc7a495ee0f1aceb537f17e8ba2e43ac"
+          }
+        },
+        {
+          "client_id": "345627301132-tnuo3gi0eae1rlsbms8483qu5kqmting.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvkspn6Al0HrP03H55bs5tQUj0NinXH-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345627301132-tnuo3gi0eae1rlsbms8483qu5kqmting.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
