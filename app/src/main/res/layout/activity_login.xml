@@ -43,10 +43,11 @@
             android:layout_margin="5dp"/>
 
         <com.google.android.gms.common.SignInButton
-            android:id="@+id/signInButton"
+            android:id="@+id/SignIn_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+             />
+
     </LinearLayout>
 
 </LinearLayout>
