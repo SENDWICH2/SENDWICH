@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.firebasedata;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sendwich.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,5 @@
 package com.example.sendwich;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -6,8 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sendwich.Regester.InfoActivity;
+import com.example.sendwich.firebasedata.TestActivity;
+import com.example.sendwich.function.boolid;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -58,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
                 Intent intent = new Intent(LoginActivity.this, TestActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -97,12 +105,12 @@ public class LoginActivity extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
                 startActivity(intent);
             }
         });
     }
-
+    //구글 로그인 인증부
     // [START on_start_check_user]
     @Override
     public void onStart() {

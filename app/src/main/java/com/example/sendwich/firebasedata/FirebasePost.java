@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.firebasedata;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;

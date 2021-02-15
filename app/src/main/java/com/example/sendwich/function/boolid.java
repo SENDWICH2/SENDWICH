@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.function;
 
 public class boolid {
     public static boolean isNull(String str){
