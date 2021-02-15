@@ -19,11 +19,13 @@
             android:orientation="horizontal"
             android:gravity="center"> !-->
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_margin="7dp"/>
+                android:layout_margin="7dp"
+                android:src="@drawable/back"
+                />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -43,11 +45,12 @@
             android:layout_weight="1" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/postbtn"
-            android:layout_width="50dp"
-                android:layout_height="50dp"
+            android:layout_width="60dp"
+                android:layout_height="60dp"
             android:layout_margin="7dp"
+            android:src="@drawable/navigation"
               />
 
         </LinearLayout>
@@ -75,10 +78,11 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp">
 
 
-    </androidx.viewpager.widget.ViewPager>
-    </LinearLayout>
+        </androidx.viewpager.widget.ViewPager>
+</LinearLayout>

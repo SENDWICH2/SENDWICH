@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+
+    <item android:id="@+id/hotmarker" android:title="인기 마커만 보이기" android:checkable="true" />
+
+    <item android:id="@+id/distance" android:title="250m 이내 마커 표시">
+        <menu>
+            <item
+                android:id="@+id/m100"
+                android:title="100m" />
+            <item
+                android:id="@+id/m250"
+                android:title="250m" />
+            <item
+                android:id="@+id/m500"
+                android:title="500m" />
+            <item
+                android:id="@+id/km1"
+                android:title="1km" />
+            <item
+                android:id="@+id/km3"
+                android:title="3km" />
+            <item
+                android:id="@+id/km5"
+                android:title="5km" />
+        </menu>
+    </item>
+
+</menu>

@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Posts.Select.Select">
+    tools:context=".Posts.Select.SelectFragment">
 
     <ListView
-        android:id="@android:id/list"
-    android:layout_width="match_parent"
+         android:id="@+id/select_list"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
