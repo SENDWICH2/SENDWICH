@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class PostsActivity extends AppCompatActivity {
 
-    ImageButton mPostbtn;
-    ImageButton mbtn;
+    ImageView mPostbtn;
+    ImageView mbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,7 @@ public class PostsActivity extends AppCompatActivity {
         mbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PostsActivity.this, PostClickActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

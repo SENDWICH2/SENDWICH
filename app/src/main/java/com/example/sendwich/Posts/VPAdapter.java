@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.sendwich.Posts.Advertise.Advertise;
 import com.example.sendwich.Posts.Combine.Combine;
-import com.example.sendwich.Posts.Select.Select;
+import com.example.sendwich.Posts.Select.SelectFragment;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class VPAdapter extends FragmentPagerAdapter {
     public VPAdapter(FragmentManager fm) {
         super(fm);
         items = new ArrayList<Fragment>();
-        items.add(new Select());
+        items.add(new SelectFragment());
         items.add(new Combine());
         items.add(new Advertise());
         
