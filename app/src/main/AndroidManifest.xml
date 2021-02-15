@@ -26,6 +26,7 @@
         <activity android:name=".PostClickActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".ModifyProfileActivity"></activity>
+        <activity android:name=".TestActivity"></activity>
 
         <activity android:name=".LoginActivity">
             <intent-filter>

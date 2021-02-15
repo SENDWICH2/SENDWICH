@@ -33,19 +33,15 @@ public class LoginActivity extends AppCompatActivity {
     private EditText insertEmail, insertPWD;
 
 
-
     //온크리에이트 시작
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         googleloginbtn = findViewById(R.id.SignIn_Button);
         join = (Button) findViewById(R.id.registerbtn);
         login = (Button) findViewById(R.id.loginbtn);
@@ -60,22 +56,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
                 startActivity(intent);
             }
         });
 
         /////일반 로그인
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String email = insertEmail.getText().toString().trim();
                 String pwd = insertPWD.getText().toString().trim();
                 String email1 = insertEmail.getText().toString();
                 String pwd1 = insertPWD.getText().toString();
-
-
                 if (boolid.isNull(email1)&& boolid.isNull(pwd1)) {
                     mAuth.signInWithEmailAndPassword(email, pwd)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -92,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                 }
                             });
-
                 }
                 else
                     {
@@ -100,19 +93,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
             }
         });
-
         ///회원가입하러가기
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
-
-
     }
-
 
     // [START on_start_check_user]
     @Override
