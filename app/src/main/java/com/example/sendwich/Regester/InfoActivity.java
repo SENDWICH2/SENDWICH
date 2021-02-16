@@ -1,5 +1,6 @@
 package com.example.sendwich.Regester;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
@@ -33,6 +36,11 @@ import java.io.File;
 
 public class InfoActivity extends AppCompatActivity {
 
+    private String[] mCategory = {"음식","영화","공원","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소","명소"};
+    private boolean[] mCategorySelected = new boolean[mCategory.length];
+    private TextView mTvCategory;
+    private AlertDialog mCategorySelectDialog;
+    private String categorysum="";
     public static final int PICK_FROM_ALBUM = 1;
     private Uri imageUri;
     private String pathUri;
@@ -49,9 +57,12 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
 
         // Authentication, Database, Storage 초기화
+
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         mStorage = FirebaseStorage.getInstance();
+        mTvCategory = (TextView) findViewById(R.id.tv_category);
 
         // 변수 할당
         username = findViewById(R.id.username);
@@ -59,6 +70,43 @@ public class InfoActivity extends AppCompatActivity {
         userpw = findViewById(R.id.userpassword);
         profile = findViewById(R.id.memberjoin_iv);
         signup = findViewById(R.id.Meberjoin_bt);
+
+        mTvCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCategorySelectDialog.show();
+            }
+        });
+
+        mCategorySelectDialog = new AlertDialog.Builder(InfoActivity.this )
+                .setMultiChoiceItems(mCategory, mCategorySelected, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        mCategorySelected[i] = b;
+
+                    }
+                })
+                .setTitle("title")
+                .setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                for (int i = 0; i < mCategory.length ; i++)
+                                {
+                                    if (mCategorySelected[i])
+                                    {
+                                        categorysum = categorysum +". " + mCategory[i];
+
+                                    }
+                                }
+
+
+                            }
+                        })
+                .setNegativeButton("취소",null)
+                .create();
+
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,14 +209,19 @@ public class InfoActivity extends AppCompatActivity {
                                                 while (!imageUrl.isComplete()) ;
 
                                                 UserModel userModel = new UserModel();
-
+                                                userModel.follow = "0";
+                                                userModel.follower = "0";
+                                                userModel.postnum = "0";
+                                                userModel.category = categorysum;
                                                 userModel.userName = name;
                                                 userModel.uid = uid;
                                                 userModel.profileImageUrl = imageUrl.getResult().toString();
+                                                userModel.useremail = email;
 
                                                 // database에 저장
                                                 mDatabase.getReference().child("users").child(uid)
                                                         .setValue(userModel);
+
                                             }
 
                                         });

@@ -1,12 +1,8 @@
 package com.example.sendwich;
 
-import android.app.Activity;
-import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
@@ -15,8 +11,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.sendwich.Posts.VPAdapter;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 public class PostsActivity extends AppCompatActivity {
 
@@ -29,7 +23,7 @@ public class PostsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_posts);
 
         mPostbtn = findViewById(R.id.postbtn);
-        mbtn = findViewById(R.id.btn);
+        mbtn = findViewById(R.id.profileimage);
 
         ViewPager vp = findViewById(R.id.viewpager);
         VPAdapter adapter = new VPAdapter(getSupportFragmentManager());

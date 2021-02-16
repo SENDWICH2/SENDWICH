@@ -14,7 +14,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.sendwich.function.UserModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -40,9 +43,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,7 +66,11 @@ public class MainActivity extends AppCompatActivity
     Button logout;
     private GoogleMap mMap;
     private Marker currentMarker = null;
-    private FirebaseDatabase database;
+
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+    List<Object> Array = new ArrayList<Object>();
+
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
@@ -65,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     boolean needRequest = false;
-
+    public String msg;
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
 
@@ -74,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
     //데이터베이스 읽어오기
 
-
+    private DatabaseReference mDatabase;// ...
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Location location;
@@ -84,6 +98,8 @@ public class MainActivity extends AppCompatActivity
     private View 	decorView;
     private int	uiOption;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,9 +107,8 @@ public class MainActivity extends AppCompatActivity
         ActionBar ab = getSupportActionBar();
         ab.hide();  //액션바 숨기기
 
-        database = FirebaseDatabase.getInstance();
-
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -123,6 +138,12 @@ public class MainActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //유저아이디 가져오기
+        String uid = user.getUid();
+        String email = user.getEmail();
+        //uid_text.setText(u);
+        readUser(uid);
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,10 +159,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //유저아이디 가져오기
-        Intent idintent = getIntent();
-        String UID = idintent.getStringExtra("UID");
-        uid_text.setText(UID);
+
+
+
+
+
+
+
+
+
 
         //로그아웃
         logout.setOnClickListener(new View.OnClickListener() {
@@ -542,6 +568,30 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
+    private void readUser(String userid){
+        mDatabase.child("users").child(userid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                if(dataSnapshot.getValue(UserModel.class) != null){
+                    UserModel ID = dataSnapshot.getValue(UserModel.class);
+
+                    Log.w("FireBaseData", "getData" + ID.toString());
+                    uid_text.setText(ID.getUserName()+"님");
+                } else {
+                    Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
 
 
 }
