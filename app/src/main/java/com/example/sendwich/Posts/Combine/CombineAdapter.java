@@ -25,7 +25,7 @@ public class CombineAdapter extends ArrayAdapter implements AdapterView.OnItemCl
     }
 
     class ViewHolder {
-        public TextView tv_id;
+        public TextView tv_userid;
     }
 
     public CombineAdapter(Context context, ArrayList list) {
@@ -42,9 +42,12 @@ public class CombineAdapter extends ArrayAdapter implements AdapterView.OnItemCl
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             convertView = layoutInflater.inflate(R.layout.list_posts_item, parent, false);
         }
-
+        final Post post = (Post) list.get(position);
         viewHolder = new ViewHolder();
-        viewHolder.tv_id = (TextView) convertView.findViewById(R.id.id);
+        viewHolder.tv_userid = (TextView) convertView.findViewById(R.id.userid);
+
+        viewHolder.tv_userid.setText(post.getUserID());
+        viewHolder.tv_userid.setTag(post.getUserID());
 
         return convertView;
     }
