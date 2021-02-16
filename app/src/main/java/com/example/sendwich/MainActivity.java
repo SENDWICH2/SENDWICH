@@ -93,8 +93,6 @@ public class MainActivity extends AppCompatActivity
 
         database = FirebaseDatabase.getInstance();
 
-
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 

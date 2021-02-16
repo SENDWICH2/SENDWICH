@@ -12,11 +12,12 @@
         android:layout_height="match_parent"
         android:background="#Ffffff"
         android:orientation="vertical"
-        android:layout_margin="5dp">
+        android:layout_margin="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:background="#2CE91E63"
             android:orientation="horizontal">
 
@@ -39,10 +40,10 @@
         <ImageView
             android:id="@+id/picture"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="10dp"
             android:background="#D1D1D1"
-            android:scaleType="center"
-            android:src="@drawable/navigation"/>
+            android:scaleType="center" />
     </LinearLayout>
 
 

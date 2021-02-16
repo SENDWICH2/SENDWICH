@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.sendwich.Posts.Advertise.Advertise;
-import com.example.sendwich.Posts.Combine.Combine;
+import com.example.sendwich.Posts.Advertise.AdvertiseFragment;
+import com.example.sendwich.Posts.Combine.CombineFragment;
 import com.example.sendwich.Posts.Select.SelectFragment;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class VPAdapter extends FragmentPagerAdapter {
         super(fm);
         items = new ArrayList<Fragment>();
         items.add(new SelectFragment());
-        items.add(new Combine());
-        items.add(new Advertise());
+        items.add(new CombineFragment());
+        items.add(new AdvertiseFragment());
         
         itext.add("선택게시판");
         itext.add("통합게시판");

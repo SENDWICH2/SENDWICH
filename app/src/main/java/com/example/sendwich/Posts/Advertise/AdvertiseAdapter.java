@@ -1,4 +1,4 @@
-package com.example.sendwich.Posts.Select;
+package com.example.sendwich.Posts.Advertise;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,8 +14,7 @@ import com.example.sendwich.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectAdapter extends ArrayAdapter implements AdapterView.OnItemClickListener {
-    private static final String TAG = "DocSnippets";
+public class AdvertiseAdapter extends ArrayAdapter implements AdapterView.OnItemClickListener {
     private Context context;
     private List list;
 
@@ -24,12 +23,11 @@ public class SelectAdapter extends ArrayAdapter implements AdapterView.OnItemCli
         Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
 
     }
-
     class ViewHolder {
         public TextView tv_userid;
     }
 
-    public SelectAdapter(Context context, ArrayList list) {
+    public AdvertiseAdapter(Context context, ArrayList list) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
@@ -43,16 +41,13 @@ public class SelectAdapter extends ArrayAdapter implements AdapterView.OnItemCli
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             convertView = layoutInflater.inflate(R.layout.list_posts_item, parent, false);
         }
-
-        final Post post = (Post) list.get(position);
+        final Post post= (Post) list.get(position);
         viewHolder = new ViewHolder();
         viewHolder.tv_userid = (TextView)convertView.findViewById(R.id.userid);
-
 
         viewHolder.tv_userid.setText(post.getUserID());
         viewHolder.tv_userid.setTag(post.getUserID());
 
         return convertView;
-
     }
 }

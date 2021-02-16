@@ -1,32 +1,51 @@
 package com.example.sendwich.Posts.Select;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.sendwich.PostClickActivity;
 import com.example.sendwich.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.ArrayList;
 
 public class SelectFragment extends Fragment {
 
+    private String name;
+    String a;
+
     ArrayList<Post> post;
-    ListView customListView;
+    ListView selectListView;
     private static SelectAdapter selectAdapter;
+
+    final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
     private static final String TAG = "DocSnippets";
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,19 +55,53 @@ public class SelectFragment extends Fragment {
 
         //데이터를 가져와서 어댑터와 연결해 준다.
         post = new ArrayList<>();
+
+        // 메인액티비티에서 미리 값을 받아와야 함.----------------------------------
+        /*.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "데이터 읽기 => " + snapshot.getValue());
+                    Log.d(TAG, "키 값 = >" + snapshot.getKey());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+        databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                    name = datas.child("id").getValue(String.class);
+                    a = name;
+                    String key= datas.getKey();
+                    Log.d(TAG,"이름 => " + name);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });*/
+//-------------------------------------------------------------
         post.add(new Post("1111"));
         post.add(new Post("2222"));
         post.add(new Post("3333"));
 
-        customListView = (ListView) rootView.findViewById(R.id.select_list);
+        selectListView = (ListView) rootView.findViewById(R.id.select_list);
         selectAdapter = new SelectAdapter(getContext(), post);
-        customListView.setAdapter(selectAdapter);
+        selectListView.setAdapter(selectAdapter);
 
-        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "아이템 클릭 !!!ㅜㅜ" + position, Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "아이템 클릭");
                 Intent intent = new Intent(getContext(), PostClickActivity.class);
                 startActivity(intent);
             }

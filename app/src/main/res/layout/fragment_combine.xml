@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Posts.Combine.Combine">
+    tools:context=".Posts.Combine.CombineFragment">
 
 
     <ListView
-        android:id="@+id/listView_custom"
+        android:id="@+id/combine_list"
     android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
