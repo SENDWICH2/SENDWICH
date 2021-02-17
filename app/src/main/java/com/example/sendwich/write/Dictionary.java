@@ -1,18 +1,20 @@
 package com.example.sendwich.write;
 
+import android.net.Uri;
+
 public class Dictionary {
-    //private ImageView test;
 
-  //  public String getTest() {
-  //      return test;
-  //  }
+    private Uri uri;
 
-   // public Dictionary(String test) {
-   //     this.test = test;
-  //  }
+    public Dictionary(Uri uri) {
+        this.uri = uri;
+    }
 
-   // public void setTest(String test) {
-    //    this.test = test;
+    public Uri getUri() {
+        return uri;
+    }
 
-  //  }
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
 }

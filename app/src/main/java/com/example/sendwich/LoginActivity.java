@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sendwich.Regester.InfoActivity;
+import com.example.sendwich.Regester.RegisterActivity;
 import com.example.sendwich.firebasedata.TestActivity;
 import com.example.sendwich.function.boolid;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

@@ -23,7 +23,7 @@ public class WriteAdapter extends RecyclerView.Adapter<WriteAdapter.WriteViewHol
 
         public WriteViewHolder(View view) {
             super(view);
-            this.test = (ImageView) view.findViewById(R.id.pic);
+            this.test = (ImageView) view.findViewById(R.id.prephoto);
         }
     }
 
@@ -44,7 +44,7 @@ public class WriteAdapter extends RecyclerView.Adapter<WriteAdapter.WriteViewHol
     @Override
     public void onBindViewHolder(@NonNull WriteViewHolder viewholder, int position) {
 
-       // viewholder.test.setImageURI(mList.get(position).getTest());
+        viewholder.test.setImageURI(mList.get(position).getUri());
 
     }
 
