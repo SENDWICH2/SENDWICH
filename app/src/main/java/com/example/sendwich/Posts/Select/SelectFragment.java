@@ -28,7 +28,6 @@ import java.util.ArrayList;
 public class SelectFragment extends Fragment {
 
     private String name;
-    String a;
 
     ArrayList<Post> post;
     ListView selectListView;
@@ -43,8 +42,6 @@ public class SelectFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
     }
 
     @Override
@@ -56,56 +53,38 @@ public class SelectFragment extends Fragment {
         //데이터를 가져와서 어댑터와 연결해 준다.
         post = new ArrayList<>();
 
-        // 메인액티비티에서 미리 값을 받아와야 함.----------------------------------
-        /*.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "데이터 읽기 => " + snapshot.getValue());
-                    Log.d(TAG, "키 값 = >" + snapshot.getKey());
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
         databaseReference = FirebaseDatabase.getInstance().getReference("posts");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     name = datas.child("id").getValue(String.class);
-                    a = name;
                     String key= datas.getKey();
                     Log.d(TAG,"이름 => " + name);
+
+                    post.add(new Post(name));
+
+                    selectListView = (ListView) rootView.findViewById(R.id.select_list);
+                    selectAdapter = new SelectAdapter(getContext(), post);
+                    selectListView.setAdapter(selectAdapter);
+
+                    selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getContext(), PostClickActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
 
-        });*/
-//-------------------------------------------------------------
-        post.add(new Post("1111"));
-        post.add(new Post("2222"));
-        post.add(new Post("3333"));
-
-        selectListView = (ListView) rootView.findViewById(R.id.select_list);
-        selectAdapter = new SelectAdapter(getContext(), post);
-        selectListView.setAdapter(selectAdapter);
-
-        selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), PostClickActivity.class);
-                startActivity(intent);
-            }
         });
+
 
         return rootView;
     }

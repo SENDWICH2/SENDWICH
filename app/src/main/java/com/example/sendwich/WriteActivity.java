@@ -40,6 +40,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.net.URI;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -107,14 +108,11 @@ public class WriteActivity extends AppCompatActivity {
         addbtn.setOnClickListener(new View.OnClickListener() {  //사진 추가 버튼
             @Override
             public void onClick(View view) {
-
-
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, PICK_FROM_MULTI_ALBUM);
-
             }
         });
 
@@ -125,6 +123,9 @@ public class WriteActivity extends AppCompatActivity {
                 finish();
             }
         });
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy년 MM월 dd일");
+        Date time = new Date();
+        String time1 = format1.format(time);
 
         upload = findViewById(R.id.uploadbtn);
         upload.setOnClickListener(new View.OnClickListener() {  //게시물 업로드 하기 버튼
@@ -135,8 +136,10 @@ public class WriteActivity extends AppCompatActivity {
                 if (edit.getText().toString().length() == 0) { //공백이면
                     Toast.makeText(getApplicationContext(), "글을 작성해주세요", Toast.LENGTH_SHORT).show();
                 } else {
-                    Posting Post = new Posting("tmddus2123", "이승연", msg, "시간", "사진 이름", 3);
-                    databaseReference.child("posts").push().setValue(Post);
+                    Posting Post = new Posting("tmddus2123", "이승연", msg, time1,"사진 이름", 3);
+                    databaseReference.child("posts").child("").push().setValue(Post);
+                    //databaseReference.child("posts").child("문서번호를 정하자").push().setValue(Post);
+                    //databaseReference.child("posts").child("방금 생성한 문서 번호 넣기").child("PicNum").setValue();
                     finish();
                 }
             }
@@ -182,7 +185,6 @@ public class WriteActivity extends AppCompatActivity {
                             Dictionary data1 = new Dictionary(clipData.getItemAt(i).getUri());
                             mArrayList.add(data1);
                             mAdapter.notifyDataSetChanged();
-
                             uploadFile();
                         }
                         Log.d(TAG, "전체 이미지 경로 => " + clipData);
@@ -203,7 +205,7 @@ public class WriteActivity extends AppCompatActivity {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss"); // 사진 이름 변경해서 저장
             Date now = new Date();
-            String filename = formatter.format(now)+ "_" + count + ".png";
+            String filename = formatter.format(now)+ "_" + count + "아이디" +".png";
 
             StorageReference storageRef = storage.getReferenceFromUrl("gs://flugmediaworks-dba3f.appspot.com").child("photo/" + filename);
 

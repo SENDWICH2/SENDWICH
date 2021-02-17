@@ -1,10 +1,15 @@
 package com.example.sendwich;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +23,11 @@ import static com.example.sendwich.PostClick.setListViewHeight.setListViewHeight
 public class PostClickActivity extends AppCompatActivity {
 
     ImageView back;
+    ImageView msg;
+    EditText write;
+    String writestr;
+
+    ImageView heart;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +52,36 @@ public class PostClickActivity extends AppCompatActivity {
         listview = (ListView)findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        adapter.addItem("1111","가나다라마바사아자카타파하");
-        adapter.addItem("2222","가나다라마바사아자카타파하");
-        adapter.addItem("3333","가나다라마바사아자카타파하");
-        adapter.addItem("1111","가나다라마바사아자카타파하");
-        adapter.addItem("1111","가나다라마바사아자카타파하");
-        adapter.addItem("1111","가나다라마바사아자카타파하");
-        adapter.addItem("1111","가나다라마바사아자카타파하");
-        
+        heart = (ImageView)findViewById(R.id.emptyheart);
+
+        heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(heart != null) {
+                    heart.setSelected(!heart.isSelected());
+                }
+            }
+        });
+
+        write = findViewById(R.id.writetext);
+
+        msg = findViewById(R.id.writebtn);
+        msg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writestr = write.getText().toString();
+                if(writestr.length() == 0) {// 공백이면
+                    Toast.makeText(getApplicationContext(), "빈칸", Toast.LENGTH_SHORT).show();
+                } else {
+                    adapter.addItem("asdf", writestr);
+                    listview.setAdapter(adapter);
+                    setListViewHeightBasedOnChildren(listview);
+                }
+                InputMethodManager mInputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                mInputMethodManager.hideSoftInputFromWindow(write.getWindowToken(), 0);
+                write.setText(null);
+            }
+        });
         listview.setAdapter(adapter);
         setListViewHeightBasedOnChildren(listview);
     }

@@ -57,10 +57,10 @@ public class ProfileActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManaget);
         mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        String uid = user.getUid();
-        String email = user.getEmail();
+  //      String uid = user.getUid();
+//        String email = user.getEmail();
         //uid_text.setText(u);
-        readUser(uid);
+  //      readUser(uid);
 
         Userid = findViewById(R.id.Idprof);
         Useremail = findViewById(R.id.Emailprof);

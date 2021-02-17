@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity
     private ArrayAdapter<String> adapter;
     List<Object> Array = new ArrayList<Object>();
 
+    final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity
     boolean needRequest = false;
     public String msg;
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
-    String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};  // 외부 저장소
 
     Location mCurrentLocatiion;
     LatLng currentPosition;
@@ -95,9 +98,8 @@ public class MainActivity extends AppCompatActivity
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)\
-    private View 	decorView;
-    private int	uiOption;
-
+    private View decorView;
+    private int uiOption;
 
 
     @Override
@@ -139,10 +141,10 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
 
         //유저아이디 가져오기
-        String uid = user.getUid();
-        String email = user.getEmail();
+//        String uid = user.getUid();
+//        String email = user.getEmail();
         //uid_text.setText(u);
-        readUser(uid);
+//        readUser(uid);
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,28 +162,51 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
-
-
-
-
-
-
-
-
         //로그아웃
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this,LoginActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
 
             }
         });
 
+        //게시물 출력 메인에서 미리 정보 받아야 함.
+        /*FirebaseDatabase.getInstance().getReference().
+                addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Log.d(TAG, "데이터 읽기 => " + snapshot.getValue());
+                            Log.d(TAG, "키 값 = >" + snapshot.getKey());
+                        }
+                    }
+                    @Override
+                    public void onCancelled (@NonNull DatabaseError error){
 
+                    }
+
+                });*/
+        databaseReference =FirebaseDatabase.getInstance().getReference("posts");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    String name = datas.child("id").getValue(String.class);
+                    String key = datas.getKey();
+                    Log.d(TAG, "이름 => " + name);
+                }
+
+            }
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+
+            }
+
+        });
 
     }
 
@@ -205,7 +230,7 @@ public class MainActivity extends AppCompatActivity
 
 
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED   ) {
+                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
 
             // 2. 이미 퍼미션을 가지고 있다면
             // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
@@ -214,7 +239,7 @@ public class MainActivity extends AppCompatActivity
             startLocationUpdates(); // 3. 위치 업데이트 시작
 
 
-        }else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
+        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
 
             // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])) {
@@ -227,14 +252,14 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(View view) {
 
                         // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                        ActivityCompat.requestPermissions( MainActivity.this, REQUIRED_PERMISSIONS,
+                        ActivityCompat.requestPermissions(MainActivity.this, REQUIRED_PERMISSIONS,
                                 PERMISSIONS_REQUEST_CODE);
                     }
                 }).show();
             } else {
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
                 // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions( this, REQUIRED_PERMISSIONS,
+                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             }
         }
@@ -248,7 +273,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onMapClick(LatLng latLng) {
 
-                Log.d( TAG, "onMapClick :");
+                Log.d(TAG, "onMapClick :");
             }
         });
     }
@@ -281,13 +306,14 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+
     private void startLocationUpdates() {
 
         if (!checkLocationServicesStatus()) {
 
             Log.d(TAG, "startLocationUpdates : call showDialogForLocationServiceSetting");
             showDialogForLocationServiceSetting();
-        }else {
+        } else {
 
             int hasFineLocationPermission = ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION);
@@ -295,7 +321,7 @@ public class MainActivity extends AppCompatActivity
                     Manifest.permission.ACCESS_COARSE_LOCATION);
 
             if (hasFineLocationPermission != PackageManager.PERMISSION_GRANTED ||
-                    hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED   ) {
+                    hasCoarseLocationPermission != PackageManager.PERMISSION_GRANTED) {
 
                 Log.d(TAG, "startLocationUpdates : 퍼미션 안가지고 있음");
                 return;
@@ -323,7 +349,7 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "onStart : call mFusedLocationClient.requestLocationUpdates");
             mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
-            if (mMap!=null)
+            if (mMap != null)
                 mMap.setMyLocationEnabled(true);
         }
     }
@@ -441,16 +467,14 @@ public class MainActivity extends AppCompatActivity
                 Manifest.permission.ACCESS_COARSE_LOCATION);
 
 
-
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED   ) {
+                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
 
         return false;
 
     }
-
 
 
     /*
@@ -461,7 +485,7 @@ public class MainActivity extends AppCompatActivity
                                            @NonNull String[] permissions,
                                            @NonNull int[] grandResults) {
 
-        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
 
@@ -478,12 +502,11 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-            if ( check_result ) {
+            if (check_result) {
 
                 // 퍼미션을 허용했다면 위치 업데이트를 시작합니다.
                 startLocationUpdates();
-            }
-            else {
+            } else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
@@ -501,7 +524,7 @@ public class MainActivity extends AppCompatActivity
                         }
                     }).show();
 
-                }else {
+                } else {
 
 
                     // "다시 묻지 않음"을 사용자가 체크하고 거부를 선택한 경우에는 설정(앱 정보)에서 퍼미션을 허용해야 앱을 사용할 수 있습니다.
@@ -519,6 +542,7 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
@@ -569,16 +593,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void readUser(String userid){
+    private void readUser(String userid) {
         mDatabase.child("users").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                if(dataSnapshot.getValue(UserModel.class) != null){
+                if (dataSnapshot.getValue(UserModel.class) != null) {
                     UserModel ID = dataSnapshot.getValue(UserModel.class);
 
                     Log.w("FireBaseData", "getData" + ID.toString());
-                    uid_text.setText(ID.getUserName()+"님");
+                    uid_text.setText(ID.getUserName() + "님");
                 } else {
                     Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
                 }
@@ -591,7 +615,5 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-
 
 }
