@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.sendwich.Posts.Posting;
-import com.example.sendwich.write.Dictionary;
+ㅁimport com.example.sendwich.write.Dictionary;
 import com.example.sendwich.write.WriteAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,9 +38,6 @@ import com.google.firebase.storage.UploadTask;
 
 
 import java.io.File;
-import java.lang.reflect.Array;
-import java.net.URI;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -205,7 +202,7 @@ public class WriteActivity extends AppCompatActivity {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss"); // 사진 이름 변경해서 저장
             Date now = new Date();
-            String filename = formatter.format(now)+ "_" + count + "아이디" +".png";
+            String filename = formatter.format(now)+ "_" + count + ".png";
 
             StorageReference storageRef = storage.getReferenceFromUrl("gs://flugmediaworks-dba3f.appspot.com").child("photo/" + filename);
 
