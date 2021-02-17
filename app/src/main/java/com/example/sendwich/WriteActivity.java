@@ -24,12 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.sendwich.Posts.Posting;
-import com.example.sendwich.write.Dictionary;
-import com.example.sendwich.write.WriteAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -38,8 +34,6 @@ import com.google.firebase.storage.UploadTask;
 
 
 import java.io.File;
-import java.lang.reflect.Array;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

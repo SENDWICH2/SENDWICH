@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "301634917573-f5mb8cfkkv0h26ehr32ik2mh18kr227p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sendwich",
+            "certificate_hash": "fd7d0e22673d834da9e5d7857e6921f718b6ccf7"
+          }
+        },
+        {
           "client_id": "301634917573-qhirccb1d7dk09uvke65ha3j6172cssn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
