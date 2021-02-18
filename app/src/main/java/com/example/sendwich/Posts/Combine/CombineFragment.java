@@ -27,7 +27,7 @@ public class CombineFragment extends Fragment {
 
     private String name;
 
-    ArrayList<Post> posts;
+    ArrayList<Post2> post2s;
     ListView combineListView;
     private static CombineAdapter combineAdapter;
     private static final String TAG = "DocSnippets";
@@ -41,7 +41,7 @@ public class CombineFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_combine, container, false);
 
-        posts = new ArrayList<>();
+        post2s = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("posts");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -52,10 +52,10 @@ public class CombineFragment extends Fragment {
                     String key= datas.getKey();
                     Log.d(TAG,"이름 => " + name);
 
-                    posts.add(new Post(name));
+                    post2s.add(new Post2(name));
 
                     combineListView = (ListView) rootView.findViewById(R.id.combine_list);
-                    combineAdapter = new CombineAdapter(getContext(), posts);
+                    combineAdapter = new CombineAdapter(getContext(), post2s);
                     combineListView.setAdapter(combineAdapter);
 
                     combineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,10 +78,10 @@ public class CombineFragment extends Fragment {
         return rootView;
     }
 }
-    class Post {
+    class Post2 {
         private String UserID;
 
-        public Post(String UserID) {
+        public Post2(String UserID) {
             this.UserID = UserID;
         }
 
