@@ -6,11 +6,12 @@
 
     <item android:id="@+id/hotmarker" android:title="인기 마커만 보이기" android:checkable="true" />
 
-    <item android:id="@+id/distance" android:title="250m 이내 마커 표시">
+    <item android:id="@+id/distance" android:title="범위 바꾸기">
         <menu>
             <item
                 android:id="@+id/m100"
-                android:title="100m" />
+                android:title="100m"
+                />
             <item
                 android:id="@+id/m250"
                 android:title="250m" />

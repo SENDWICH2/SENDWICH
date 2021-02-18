@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.sendwich.PostClickActivity;
-import com.example.sendwich.Posts.Select.SelectAdapter;
 import com.example.sendwich.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +27,7 @@ public class AdvertiseFragment extends Fragment {
 
     private String name;
 
-    ArrayList<Post> posts;
+    ArrayList<Post3> post3s;
     ListView advertiseListView;
     private static AdvertiseAdapter advertiseAdapter;
 
@@ -40,7 +39,7 @@ public class AdvertiseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_advertise, container, false);
 
-        posts = new ArrayList<>();
+        post3s = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("posts");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -50,10 +49,10 @@ public class AdvertiseFragment extends Fragment {
                     String key= datas.getKey();
                     Log.d(TAG,"이름 => " + name);
 
-                    posts.add(new Post(name));
+                    post3s.add(new Post3(name));
 
                     advertiseListView = (ListView) rootView.findViewById(R.id.advertise_list);
-                    advertiseAdapter = new AdvertiseAdapter(getContext(), posts);
+                    advertiseAdapter = new AdvertiseAdapter(getContext(), post3s);
                     advertiseListView.setAdapter(advertiseAdapter);
 
                     advertiseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,10 +76,10 @@ public class AdvertiseFragment extends Fragment {
     }
 }
 
-    class Post {
+    class Post3 {
         private String UserID;
 
-        public Post(String UserID) {
+        public Post3(String UserID) {
             this.UserID = UserID;
         }
 

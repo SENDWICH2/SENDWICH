@@ -42,12 +42,12 @@ public class CombineAdapter extends ArrayAdapter implements AdapterView.OnItemCl
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             convertView = layoutInflater.inflate(R.layout.list_posts_item, parent, false);
         }
-        final Post post = (Post) list.get(position);
+        final Post2 post2 = (Post2) list.get(position);
         viewHolder = new ViewHolder();
         viewHolder.tv_userid = (TextView) convertView.findViewById(R.id.userid);
 
-        viewHolder.tv_userid.setText(post.getUserID());
-        viewHolder.tv_userid.setTag(post.getUserID());
+        viewHolder.tv_userid.setText(post2.getUserID());
+        viewHolder.tv_userid.setTag(post2.getUserID());
 
         return convertView;
     }

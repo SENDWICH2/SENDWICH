@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.sendwich.PostClickActivity;
 import com.example.sendwich.R;
@@ -21,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import java.util.ArrayList;
@@ -28,13 +29,17 @@ import java.util.ArrayList;
 public class SelectFragment extends Fragment {
 
     private String name;
+    private String time;
 
-    ArrayList<Post> post;
+    ArrayList<Post1> post1;
     ListView selectListView;
     private static SelectAdapter selectAdapter;
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
     private static final String TAG = "DocSnippets";
 
@@ -51,7 +56,7 @@ public class SelectFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_select, container, false);
 
         //데이터를 가져와서 어댑터와 연결해 준다.
-        post = new ArrayList<>();
+        post1 = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("posts");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -59,13 +64,18 @@ public class SelectFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     name = datas.child("id").getValue(String.class);
+                    time = datas.child("time").getValue(String.class);
+
                     String key= datas.getKey();
                     Log.d(TAG,"이름 => " + name);
+                    Log.d(TAG, "시간 => " + time);
 
-                    post.add(new Post(name));
+                    post1.add(new Post1(name, time));
+
+
 
                     selectListView = (ListView) rootView.findViewById(R.id.select_list);
-                    selectAdapter = new SelectAdapter(getContext(), post);
+                    selectAdapter = new SelectAdapter(getContext(), post1);
                     selectListView.setAdapter(selectAdapter);
 
                     selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -90,11 +100,13 @@ public class SelectFragment extends Fragment {
     }
 }
 
-    class Post {
+    class Post1 {
         private String UserID;
+        private String ThumbnailName;
 
-        public Post(String UserID) {
+        public Post1(String UserID, String thumbnailName) {
             this.UserID = UserID;
+            this.ThumbnailName = thumbnailName;
         }
 
         public String getUserID() {
@@ -103,5 +115,14 @@ public class SelectFragment extends Fragment {
 
         public void setUserID(String userID) {
             UserID = userID;
+
+        }
+
+        public String getThumbnailName() {
+            return ThumbnailName;
+        }
+
+        public void setThumbnailName(String thumbnailName) {
+            ThumbnailName = thumbnailName;
         }
     }

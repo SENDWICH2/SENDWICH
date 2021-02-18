@@ -48,8 +48,9 @@ public class WriteActivity extends AppCompatActivity {
 
     private static final String TAG = "DocSnippets";
 
-    private int count = -1;
+    private int count = 0;
 
+    private String time1;
 
     Uri imagePath1;
 
@@ -120,9 +121,7 @@ public class WriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy년 MM월 dd일");
-        Date time = new Date();
-        String time1 = format1.format(time);
+
 
         upload = findViewById(R.id.uploadbtn);
         upload.setOnClickListener(new View.OnClickListener() {  //게시물 업로드 하기 버튼
@@ -168,9 +167,10 @@ public class WriteActivity extends AppCompatActivity {
                         File f1 = new File(String.valueOf(imagePath1));
                         Log.d(TAG, "uri => " + String.valueOf(f1));
                         try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath1);
-                            uploadFile();
-                            image.setImageBitmap(bitmap); //--> 사진 보이기
+                            Dictionary data1 = new Dictionary(clipData.getItemAt(0).getUri());
+                            mArrayList.add(data1);
+                            mAdapter.notifyDataSetChanged();
+                            uploadFile();//--> 사진 보이기
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -202,7 +202,8 @@ public class WriteActivity extends AppCompatActivity {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss"); // 사진 이름 변경해서 저장
             Date now = new Date();
-            String filename = formatter.format(now)+ "_" + count + ".png";
+            time1 = formatter.format(now);
+            String filename = time1 + "_" + count + ".png";
 
             StorageReference storageRef = storage.getReferenceFromUrl("gs://flugmediaworks-dba3f.appspot.com").child("photo/" + filename);
 

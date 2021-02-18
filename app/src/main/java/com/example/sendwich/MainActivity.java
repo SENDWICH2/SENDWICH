@@ -12,32 +12,43 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sendwich.function.UserModel;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -53,19 +64,34 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import noman.googleplaces.NRPlaces;
+import noman.googleplaces.Place;
+import noman.googleplaces.PlaceType;
+import noman.googleplaces.PlacesException;
+import noman.googleplaces.PlacesListener;
+
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        PlacesListener {
+
+    List<Marker> previous_marker = null;
 
     TextView uid_text;
     Button btn_save;
     Button btn_home;
     Button logout;
+    Button searchbtn;
+    int distance;
+
     private GoogleMap mMap;
     private Marker currentMarker = null;
+
+    ImageView btn_filter;
 
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -109,6 +135,8 @@ public class MainActivity extends AppCompatActivity
         ActionBar ab = getSupportActionBar();
         ab.hide();  //액션바 숨기기
 
+        previous_marker = new ArrayList<Marker>();
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -139,7 +167,6 @@ public class MainActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         //유저아이디 가져오기
 //        String uid = user.getUid();
 //        String email = user.getEmail();
@@ -160,8 +187,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-
         //로그아웃
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,40 +199,69 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //게시물 출력 메인에서 미리 정보 받아야 함.
-        /*FirebaseDatabase.getInstance().getReference().
-                addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange (@NonNull DataSnapshot dataSnapshot){
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Log.d(TAG, "데이터 읽기 => " + snapshot.getValue());
-                            Log.d(TAG, "키 값 = >" + snapshot.getKey());
-                        }
-                    }
-                    @Override
-                    public void onCancelled (@NonNull DatabaseError error){
-
-                    }
-
-                });*/
-        databaseReference =FirebaseDatabase.getInstance().getReference("posts");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        searchbtn = findViewById(R.id.search_btn);
+        searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
-                for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    String name = datas.child("id").getValue(String.class);
-                    String key = datas.getKey();
-                    Log.d(TAG, "이름 => " + name);
-                }
-
+            public void onClick(View v) {
+                showPlaceInformation(currentPosition);
             }
-            @Override
-            public void onCancelled (@NonNull DatabaseError error){
-
-            }
-
         });
 
+
+        btn_filter = findViewById(R.id.filterbtn);
+        btn_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+                getMenuInflater().inflate(R.menu.my_menu, popup.getMenu());
+                MenuItem mText = findViewById(R.id.distance);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.hotmarker:
+                                Toast.makeText(getApplicationContext(), "핫마커 클릭", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "핫마커");
+                                if (item.isChecked()) {
+                                    item.setChecked(false);
+                                    Log.d(TAG, "체크 해제");
+                                } else {
+                                    item.setChecked(true);
+                                    Log.d(TAG, "체크");
+                                }
+                                return true;
+                            case R.id.m100:
+                                Log.d(TAG, "100m" + item.getTitle());
+                                distance=100;
+                                return true;
+                            case R.id.m250:
+                                Log.d(TAG, "250m" + item.getTitle());
+                                distance=250;
+                                return true;
+                            case R.id.m500:
+                                //mText.setTitle("500m 이내 마커 표시");
+                                Log.d(TAG, "500m" + item.getTitle());
+                                distance=500;
+                                return true;
+                            case R.id.km1:
+                                Log.d(TAG, "1km" + item.getTitle());
+                                distance=1000;
+                                return true;
+                            case R.id.km3:
+                                distance=3000;
+                                Log.d(TAG, "3km" + item.getTitle());
+                                return true;
+                            case R.id.km5:
+                                distance=5000;
+                                Log.d(TAG, "5km" + item.getTitle());
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
+            }
+        });
     }
 
     @Override
@@ -215,6 +269,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onMapReady :");
 
         mMap = googleMap;
+
 
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 서울로 이동
@@ -265,7 +320,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        // 현재 오동작을 해서 주석처리
+        mMap.getUiSettings().setCompassEnabled(false);
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -501,7 +556,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
 
-
             if (check_result) {
 
                 // 퍼미션을 허용했다면 위치 업데이트를 시작합니다.
@@ -616,4 +670,62 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public void onPlacesFailure(PlacesException e) {
+
+    }
+
+    @Override
+    public void onPlacesStart() {
+
+    }
+
+    @Override
+    public void onPlacesSuccess(final List<Place> places) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (noman.googleplaces.Place place : places) {
+
+                    LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
+
+                    String markerSnippet = getCurrentAddress(latLng);
+
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(latLng);
+                    markerOptions.title(place.getName());
+                    markerOptions.snippet(markerSnippet);
+                    Marker item = mMap.addMarker(markerOptions);
+                    previous_marker.add(item);
+
+                }
+                //중복 마커 제거
+                HashSet<Marker> hashSet = new HashSet<Marker>();
+                hashSet.addAll(previous_marker);
+                previous_marker.clear();
+                previous_marker.addAll(hashSet);
+
+            }
+        });
+    }
+
+    @Override
+    public void onPlacesFinished() {
+
+    }
+
+    public void showPlaceInformation(LatLng location) {
+        mMap.clear();//지도 클리어
+
+        if (previous_marker != null)
+            previous_marker.clear();//지역정보 마커 클리어
+        new NRPlaces.Builder()
+                .listener(MainActivity.this)
+                .key("AIzaSyDH9MopTPak4saKTYNgEUjOGQHzi71Q9Es")
+                .latlng(location.latitude, location.longitude)//현재 위치
+                .radius(distance)
+                .type(PlaceType.RESTAURANT) //음식점
+                .build()
+                .execute();
+    }
 }
