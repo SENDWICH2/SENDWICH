@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sendwich.R;
@@ -35,6 +36,17 @@ public class PostClickAdapter extends BaseAdapter {
 
         TextView idView = (TextView)convertView.findViewById(R.id.id);
         TextView textView = (TextView)convertView.findViewById(R.id.message);
+
+        ImageView heart = (ImageView)convertView.findViewById(R.id.heart);
+
+        heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(heart != null) {
+                    heart.setSelected(!heart.isSelected());
+                }
+            }
+        });
 
         PostClickItem postClickItem = postClickItemList.get(position);
 
