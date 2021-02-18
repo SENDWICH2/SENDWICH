@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.sendwich.Posts.Posting;
-ㅁimport com.example.sendwich.write.Dictionary;
+import com.example.sendwich.write.Dictionary;
 import com.example.sendwich.write.WriteAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
