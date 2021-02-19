@@ -11,6 +11,10 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:src="@drawable/logo"/>
 
         <EditText
             android:id="@+id/Email"

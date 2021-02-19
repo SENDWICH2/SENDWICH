@@ -42,7 +42,7 @@
             app:backgroundTint="#E91E63"
             android:layout_marginTop="10dp"/>
         <Button
-            android:id="@+id/thumnail"
+            android:id="@+id/make"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="대표사진 만들기 +"

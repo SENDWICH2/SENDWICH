@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class CombineFragment extends Fragment {
 
     private String name;
+    private String time;
 
     ArrayList<Post2> post2s;
     ListView combineListView;
@@ -49,10 +50,11 @@ public class CombineFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     name = datas.child("id").getValue(String.class);
-                    String key= datas.getKey();
-                    Log.d(TAG,"이름 => " + name);
+                    time = datas.child("time").getValue(String.class);
 
-                    post2s.add(new Post2(name));
+                    String key= datas.getKey();
+
+                    post2s.add(new Post2(name, time));
 
                     combineListView = (ListView) rootView.findViewById(R.id.combine_list);
                     combineAdapter = new CombineAdapter(getContext(), post2s);
@@ -80,9 +82,11 @@ public class CombineFragment extends Fragment {
 }
     class Post2 {
         private String UserID;
+        private String ThumbnailName;
 
-        public Post2(String UserID) {
+        public Post2(String UserID, String thumbnailName) {
             this.UserID = UserID;
+            this.ThumbnailName = thumbnailName;
         }
 
         public String getUserID() {
@@ -91,6 +95,14 @@ public class CombineFragment extends Fragment {
 
         public void setUserID(String userID) {
             UserID = userID;
+        }
+
+        public String getThumbnailName() {
+            return ThumbnailName;
+        }
+
+        public void setThumbnailName(String thumbnailName) {
+            ThumbnailName = thumbnailName;
         }
     }
 

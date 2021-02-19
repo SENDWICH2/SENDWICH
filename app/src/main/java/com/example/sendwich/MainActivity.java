@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity
     Button searchbtn;
     int distance;
 
+    private String placeee;
+
     private GoogleMap mMap;
     private Marker currentMarker = null;
 
@@ -220,8 +222,7 @@ public class MainActivity extends AppCompatActivity
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.hotmarker:
-                                Toast.makeText(getApplicationContext(), "핫마커 클릭", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "핫마커");
+                                Log.d(TAG, "인기마커");
                                 if (item.isChecked()) {
                                     item.setChecked(false);
                                     Log.d(TAG, "체크 해제");
@@ -451,6 +452,7 @@ public class MainActivity extends AppCompatActivity
 
         } else {
             Address address = addresses.get(0);
+
             return address.getAddressLine(0).toString();
         }
 
@@ -479,6 +481,11 @@ public class MainActivity extends AppCompatActivity
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
 
+        placeee = markerTitle;
+        Intent intent = new Intent(MainActivity.this, PostsActivity.class);
+
+        intent.putExtra("주소",placeee);
+        Log.d(TAG, "주소 ==>"+ placeee);
 
         currentMarker = mMap.addMarker(markerOptions);
 
