@@ -1,5 +1,6 @@
 package com.example.sendwich.Posts;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,14 +10,14 @@ public class Posting {
     private String Name;
     private String Text;
     private String Time;
-    private String PicNum;
+    private int PicNum;
     private int Like;
 
     public Posting() {
 
     }
 
-    public Posting(String ID, String Name, String Text, String Time, String PicNum, int Like) {
+    public Posting(String ID, String Name, String Text, String Time, int PicNum, int Like) {
         this.ID = ID;
         this.Name = Name;
         this.Text = Text;
@@ -57,11 +58,11 @@ public class Posting {
         Time = time;
     }
 
-    public String getPicNum() {
+    public int getPicNum() {
         return PicNum;
     }
 
-    public void setPicNum(String picNum) {
+    public void setPicNum(int picNum) {
         PicNum = picNum;
     }
 
@@ -83,4 +84,5 @@ public class Posting {
         result.put("like", Like);
         return result;
     }
+
 }

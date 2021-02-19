@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class AdvertiseFragment extends Fragment {
 
     private String name;
+    private String time;
 
     ArrayList<Post3> post3s;
     ListView advertiseListView;
@@ -46,10 +47,11 @@ public class AdvertiseFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
                     name = datas.child("id").getValue(String.class);
-                    String key= datas.getKey();
-                    Log.d(TAG,"이름 => " + name);
+                    time = datas.child("time").getValue(String.class);
 
-                    post3s.add(new Post3(name));
+                    String key= datas.getKey();
+
+                    post3s.add(new Post3(name, time));
 
                     advertiseListView = (ListView) rootView.findViewById(R.id.advertise_list);
                     advertiseAdapter = new AdvertiseAdapter(getContext(), post3s);
@@ -78,9 +80,11 @@ public class AdvertiseFragment extends Fragment {
 
     class Post3 {
         private String UserID;
+        private String ThumbnailName;
 
-        public Post3(String UserID) {
+        public Post3(String UserID,  String thumbnailName) {
             this.UserID = UserID;
+            this.ThumbnailName = thumbnailName;
         }
 
         public String getUserID() {
@@ -90,4 +94,13 @@ public class AdvertiseFragment extends Fragment {
         public void setUserID(String userID) {
             UserID = userID;
         }
+
+        public String getThumbnailName() {
+            return ThumbnailName;
+        }
+
+        public void setThumbnailName(String thumbnailName) {
+            ThumbnailName = thumbnailName;
+        }
+
     }

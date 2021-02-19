@@ -51,6 +51,8 @@ public class WriteActivity extends AppCompatActivity {
     private int count = 0;
 
     private String time1;
+    private int number;
+
 
     Uri imagePath1;
 
@@ -59,6 +61,7 @@ public class WriteActivity extends AppCompatActivity {
     private ImageView back;
     private Button upload;
     private ImageView image;
+    private Button canvas;
 
     private EditText edit;
     private String msg;
@@ -102,15 +105,18 @@ public class WriteActivity extends AppCompatActivity {
                 mLinearLayoutManaget.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
+
         addbtn = (Button) findViewById(R.id.addpicbtn);
         addbtn.setOnClickListener(new View.OnClickListener() {  //사진 추가 버튼
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
+
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, PICK_FROM_MULTI_ALBUM);
+
             }
         });
 
@@ -131,16 +137,29 @@ public class WriteActivity extends AppCompatActivity {
 
                 if (edit.getText().toString().length() == 0) { //공백이면
                     Toast.makeText(getApplicationContext(), "글을 작성해주세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    Posting Post = new Posting("tmddus2123", "이승연", msg, time1,"사진 이름", 3);
+                }
+                else if (number == 0) {
+                    Toast.makeText(getApplicationContext(), "사진을 한 장 이상 업로드 해주세요", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Posting Post = new Posting("tmddus2123", "이승연", msg, time1, number, 3);
                     databaseReference.child("posts").child("").push().setValue(Post);
-                    //databaseReference.child("posts").child("문서번호를 정하자").push().setValue(Post);
-                    //databaseReference.child("posts").child("방금 생성한 문서 번호 넣기").child("PicNum").setValue();
                     finish();
                 }
             }
         });
         image = findViewById(R.id.prephoto);
+
+        canvas = findViewById(R.id.make);
+        canvas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WriteActivity.this, WritePhotoActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
     }
 
 
@@ -159,6 +178,7 @@ public class WriteActivity extends AppCompatActivity {
                 } else {
                     ClipData clipData = data.getClipData();
                     Log.i("clipdata", String.valueOf(clipData.getItemCount()));
+                    number = clipData.getItemCount();
 
                     if (clipData.getItemCount() > 9) {
                         Toast.makeText(WriteActivity.this, "사진은 9장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
@@ -170,7 +190,8 @@ public class WriteActivity extends AppCompatActivity {
                             Dictionary data1 = new Dictionary(clipData.getItemAt(0).getUri());
                             mArrayList.add(data1);
                             mAdapter.notifyDataSetChanged();
-                            uploadFile();//--> 사진 보이기
+                            uploadFile();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -183,6 +204,7 @@ public class WriteActivity extends AppCompatActivity {
                             mArrayList.add(data1);
                             mAdapter.notifyDataSetChanged();
                             uploadFile();
+
                         }
                         Log.d(TAG, "전체 이미지 경로 => " + clipData);
                         count = 0;

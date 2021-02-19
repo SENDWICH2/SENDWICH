@@ -2,7 +2,9 @@ package com.example.sendwich;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
@@ -16,6 +18,8 @@ public class PostsActivity extends AppCompatActivity {
 
     ImageView mPostbtn;
     ImageView mbtn;
+    EditText location;
+    private static final String TAG = "DocSnippets";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,12 @@ public class PostsActivity extends AppCompatActivity {
 
         TabLayout tab = findViewById(R.id.tap);
         tab.setupWithViewPager(vp);
+
+        Intent getIntent = getIntent();
+        String loc = getIntent.getStringExtra("주소");
+        Log.d(TAG, "주소 --> "+ loc);
+        location = findViewById(R.id.place);
+        location.setText(loc);
 
         mPostbtn.setOnClickListener(new View.OnClickListener() {
             @Override
