@@ -10,22 +10,34 @@
         android:orientation="vertical"
         >
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="username"
-            android:id="@+id/username"></EditText>
-        <EditText
-            android:layout_width="match_parent"
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_marginTop="70dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="email"
-            android:id="@+id/useremail"></EditText>
-        <EditText
-            android:layout_width="match_parent"
+            android:id="@+id/useremail"
+            android:layout_gravity="center"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:hint="pw"
-            android:id="@+id/userpassword"></EditText>
+            android:id="@+id/userpassword"
+            android:layout_gravity="center"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="username"
+            android:id="@+id/username"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="클릭하여 프로필 사진을 넣어주세요"/>
         <ImageButton
+            android:layout_gravity="center"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:text="profile"
@@ -33,15 +45,19 @@
             android:id="@+id/memberjoin_iv"
             />
         <Button
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_category"
-            android:text="Category"/>
+            android:text="카테고리 입력"/>
         <Button
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="signup"
+            android:text="회원가입"
             android:id="@+id/Meberjoin_bt"
+            android:layout_gravity="center"
             />
 
     </LinearLayout>

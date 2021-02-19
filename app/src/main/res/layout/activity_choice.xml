@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="원하시는 계정 유형을 선택해주세요"
+        tools:layout_editor_absoluteX="170dp"
+        tools:layout_editor_absoluteY="115dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="2"
+        >
+
+        <Button
+            android:id="@+id/commonuser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일반"
+            tools:layout_editor_absoluteX="63dp"
+            tools:layout_editor_absoluteY="220dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            />
+
+        <Button
+            android:id="@+id/businessuser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비즈니스"
+            tools:layout_editor_absoluteX="232dp"
+            tools:layout_editor_absoluteY="220dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"/>
+
+
+    </LinearLayout>
+</LinearLayout>

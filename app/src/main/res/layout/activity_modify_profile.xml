@@ -25,7 +25,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
-            android:src="@drawable/check"/>
+            android:src="@drawable/check"
+
+            />
 
 
     </LinearLayout>
@@ -49,12 +51,30 @@
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:text="이름"
+        android:text="이메일"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:id="@+id/useremailchange"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="아이디"
         android:textSize="15sp"
         android:textStyle="bold" />
     <EditText
@@ -62,41 +82,11 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:text="이승연"
         android:textSize="17sp"
-        android:textStyle="bold" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="사용자 이름"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="tmddus2123"
-        android:textSize="17sp"
-        android:textStyle="bold" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="웹사이트"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="https://"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:id="@+id/usernamechange"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,9 +100,16 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:text="아아아아아"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:id="@+id/userintroducetext"/>
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_category"
+        android:text="카테고리 변경"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -133,4 +130,5 @@
         android:textColor="#E91E63"
         android:textSize="17sp"
         android:textStyle="bold" />
+
 </LinearLayout>

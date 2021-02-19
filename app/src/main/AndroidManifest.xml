@@ -24,7 +24,7 @@
         <activity android:name=".PostsActivity"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".Regester.InfoActivity"></activity>
-        <activity android:name=".Regester.RegisterActivity"></activity>
+        <activity android:name=".ChoiceActivity"></activity>
         <activity android:name=".WriteActivity"></activity>
         <activity android:name=".PostClickActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>

@@ -10,14 +10,15 @@ public class UserModel {
     public String follow;
     public String follower;
     public String postnum;
-
+    public String userintroduce;
     public String category;
 
     //    public String pushToken;
     public UserModel() {
     // Default constructor required for calls to DataSnapshot.getValue(User.class)
 }
-    public UserModel(String userName, String profileImageUrl, String uid, String useremail, String category , String follow, String postnum, String follower) {
+    public UserModel(String userName, String profileImageUrl, String uid, String useremail, String category , String follow, String postnum, String follower,
+    String userintroduce) {
         this.userName = userName;
         this.profileImageUrl = profileImageUrl;
         this.uid = uid;
@@ -26,10 +27,14 @@ public class UserModel {
         this.follow = follow;
         this.postnum = postnum;
         this.follower = follower;
+        this.userintroduce = userintroduce;
     }
 
     public String getfollow(){
         return follow;
+    }
+    public String getUserintroduce(){
+        return userintroduce;
     }
     public String getfollower(){
         return follower;
@@ -61,6 +66,7 @@ public class UserModel {
                 ", profileImageUrl='" + profileImageUrl + '\'' +
                 ", uid='" + uid + '\'' +
                 ", category='" + category+ '\'' +
+                ", userintroduce='" + userintroduce+ '\'' +
                 ", follow='" + follow+'}';
     }
 }
