@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         //유저아이디 가져오기
-        String uid = user.getUid();
-        String email = user.getEmail();
-        readUser(uid);
+//        String uid = user.getUid();
+//        String email = user.getEmail();
+//        readUser(uid);
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override

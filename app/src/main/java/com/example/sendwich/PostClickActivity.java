@@ -1,6 +1,7 @@
 package com.example.sendwich;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,15 +20,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.sendwich.PostClick.PostClickAdapter;
+import com.example.sendwich.PostClick.PostClickItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +51,7 @@ public class PostClickActivity extends AppCompatActivity {
     EditText write;
     String writestr;
     ImageView sharebtn;
+    ImageView sirenbtn;
 
     ImageView heart;
 
@@ -89,6 +94,22 @@ public class PostClickActivity extends AppCompatActivity {
 
             }
         });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("message");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         back = findViewById(R.id.backbtn);  //뒤로가기
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +150,10 @@ public class PostClickActivity extends AppCompatActivity {
                     adapter.addItem("asdf", writestr);
                     listview.setAdapter(adapter);
                     setListViewHeightBasedOnChildren(listview);
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference();
+                    PostClickItem post = new PostClickItem(keyname,"asdf", writestr,2);
+                    databaseReference.child("message").child("").push().setValue(post);
                 }
                 InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 mInputMethodManager.hideSoftInputFromWindow(write.getWindowToken(), 0);
@@ -137,6 +162,27 @@ public class PostClickActivity extends AppCompatActivity {
         });
         listview.setAdapter(adapter);
         setListViewHeightBasedOnChildren(listview);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("message");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    String msgkey = datas.child("key").getValue(String.class);
+                    String msg11 = datas.child("message").getValue(String.class);
+                    if(keyname.equals(msgkey)){
+                        adapter.addItem("asdf", msg11);
+                        listview.setAdapter(adapter);
+                        setListViewHeightBasedOnChildren(listview);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         sharebtn = findViewById(R.id.share);
         sharebtn.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +194,27 @@ public class PostClickActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_STREAM,Uri.parse("gs://flugmediaworks-dba3f.appspot.com/photo/20210203_0449_1.png"));
                 Intent chooser = Intent.createChooser(intent, "게시물 공유하기 테스트");
                 startActivity(chooser);
+            }
+        });
+
+        sirenbtn = findViewById(R.id.siren);
+        sirenbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(PostClickActivity.this)
+                        .setMessage("신고하기")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(), "신고 완료", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
             }
         });
     }

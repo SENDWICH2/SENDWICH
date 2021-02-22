@@ -26,12 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sendwich.Posts.Posting;
 import com.example.sendwich.write.Dictionary;
 import com.example.sendwich.write.WriteAdapter;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -77,11 +84,11 @@ public class WriteActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReferenceFromUrl("gs://flugmediaworks-dba3f.appspot.com");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
-
 
         delete = findViewById(R.id.deletebtn);
 
@@ -144,7 +151,27 @@ public class WriteActivity extends AppCompatActivity {
                 else {
                     Posting Post = new Posting("tmddus2123", "이승연", msg, time1, number, 3);
                     databaseReference.child("posts").child("").push().setValue(Post);
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                long i = datas.getChildrenCount();
+                                Log.d(TAG, String.valueOf(i));
+
+                                }
+                            }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                     finish();
+                    finish();
+                    Intent intent = new Intent(WriteActivity.this, PostsActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -187,6 +214,7 @@ public class WriteActivity extends AppCompatActivity {
                         File f1 = new File(String.valueOf(imagePath1));
                         Log.d(TAG, "uri => " + String.valueOf(f1));
                         try {
+                            count++;
                             Dictionary data1 = new Dictionary(clipData.getItemAt(0).getUri());
                             mArrayList.add(data1);
                             mAdapter.notifyDataSetChanged();

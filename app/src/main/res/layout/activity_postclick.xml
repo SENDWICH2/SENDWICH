@@ -106,11 +106,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
 
                 <ImageView
+                    android:id="@+id/siren"
                     android:src="@drawable/siren"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
