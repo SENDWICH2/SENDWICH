@@ -1,19 +1,18 @@
 package com.example.sendwich;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sendwich.Regester.InfoActivity;
-import com.example.sendwich.Regester.RegisterActivity;
-import com.example.sendwich.firebasedata.TestActivity;
 import com.example.sendwich.function.boolid;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,14 +29,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
+    private boolean saveLoginData;
+    private String id;
+    private String pwd;
+    private EditText idText, pwdText;
+    private CheckBox checkBox;
+    private Button loginBtn;
+    private SharedPreferences appData;
 
-    private Button join,login;
+    private Button join;
     private SignInButton googleloginbtn;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN=123;
     private FirebaseAuth mAuth = null;
     private String TAG="mainTag";
-    private EditText insertEmail, insertPWD;
 
 
     //온크리에이트 시작
@@ -45,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -52,10 +58,22 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         googleloginbtn = findViewById(R.id.SignIn_Button);
         join = (Button) findViewById(R.id.registerbtn);
-        login = (Button) findViewById(R.id.loginbtn);
-        insertEmail = (EditText) findViewById(R.id.Email);
-        insertPWD = (EditText) findViewById(R.id.password);
+
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
+        loginBtn = (Button) findViewById(R.id.loginbtn);
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        load();
+
+
+        idText = (EditText) findViewById(R.id.Email);
+        pwdText = (EditText) findViewById(R.id.password);
         mAuth = FirebaseAuth.getInstance();
+
+        if (saveLoginData) {
+            idText.setText(id);
+            pwdText.setText(pwd);
+            checkBox.setChecked(saveLoginData);
+        }
 
 
         /////구글 로그인
@@ -64,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
-                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 
             }
@@ -72,13 +90,13 @@ public class LoginActivity extends AppCompatActivity {
 
         /////일반 로그인
 
-        login.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = insertEmail.getText().toString().trim();
-                String pwd = insertPWD.getText().toString().trim();
-                String email1 = insertEmail.getText().toString();
-                String pwd1 = insertPWD.getText().toString();
+                String email = idText.getText().toString().trim();
+                String pwd = pwdText.getText().toString().trim();
+                String email1 = idText.getText().toString();
+                String pwd1 = pwdText.getText().toString();
                 if (boolid.isNull(email1)&& boolid.isNull(pwd1)) {
                     mAuth.signInWithEmailAndPassword(email, pwd)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -87,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                 {
                                     if (task.isSuccessful())
                                     {
+                                        save();
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                     } else
@@ -106,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ChoiceActivity.class);
                 startActivity(intent);
             }
         });
@@ -211,6 +230,27 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void save() {
+        // SharedPreferences 객체만으론 저장 불가능 Editor 사용
+        SharedPreferences.Editor editor = appData.edit();
 
+        // 에디터객체.put타입( 저장시킬 이름, 저장시킬 값 )
+        // 저장시킬 이름이 이미 존재하면 덮어씌움
+        editor.putBoolean("SAVE_LOGIN_DATA", checkBox.isChecked());
+        editor.putString("ID", idText.getText().toString().trim());
+        editor.putString("PWD", pwdText.getText().toString().trim());
 
+        // apply, commit 을 안하면 변경된 내용이 저장되지 않음
+        editor.apply();
+    }
+
+    // 설정값을 불러오는 함수
+    private void load() {
+        // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
+        // 저장된 이름이 존재하지 않을 시 기본값
+        saveLoginData = appData.getBoolean("SAVE_LOGIN_DATA", false);
+        id = appData.getString("ID", "");
+        pwd = appData.getString("PWD", "");
+    }
 }
+

@@ -214,14 +214,15 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="하고 싶은 말"
-            android:textColor="#FF373737" />
+            android:textColor="#FF373737"
+            android:id="@+id/userintroducetext"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler2"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="28dp"
             android:layout_margin="5dp"
-            android:scrollbars="horizontal"
-          />
+            android:scrollbars="horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
