@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * Created by Azhar Rivaldi on 04/02/2018.
  */
 
+
 public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

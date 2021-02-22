@@ -80,19 +80,20 @@ public class SelectFragment extends Fragment {
                     selectAdapter = new SelectAdapter(getContext(), post1);
                     selectListView.setAdapter(selectAdapter);
                 }
+                if(count >= 1){
+                    selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Toast.makeText(getContext(), "클릭 : " + position, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "키값22 => " + keys.get(position));
 
-                selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getContext(), "클릭 : " + position, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "키값22 => " + keys.get(position));
+                            Intent intent = new Intent(getContext(), PostClickActivity.class);
+                            intent.putExtra("게시물키값", keys.get(position));
 
-                        Intent intent = new Intent(getContext(), PostClickActivity.class);
-                        intent.putExtra("게시물키값", keys.get(position));
-                        startActivity(intent);
-                    }
-                });
-
+                            startActivity(intent);
+                        }
+                    });
+                }
 
             }
             @Override

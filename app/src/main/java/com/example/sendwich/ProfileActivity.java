@@ -15,10 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.sendwich.Profile.Dictionary2;
 import com.example.sendwich.Profile.ProfileAdapter;
 import com.example.sendwich.function.ImageLoadTask;
 import com.example.sendwich.function.UserModel;
+import com.google.android.gms.common.api.Api;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,9 +44,9 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView back, profileimg;
     private Button sticker;
     private DatabaseReference mDatabase;// ...
+    private TextView userintrotext;
 
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -57,10 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManaget);
         mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-  //      String uid = user.getUid();
-//        String email = user.getEmail();
-        //uid_text.setText(u);
-  //      readUser(uid);
+        String uid = user.getUid();
+        readUser(uid);
 
         Userid = findViewById(R.id.Idprof);
         Useremail = findViewById(R.id.Emailprof);
@@ -69,13 +72,15 @@ public class ProfileActivity extends AppCompatActivity {
         Postnum = findViewById(R.id.postnum);
         Follownum = findViewById(R.id.follownum);
         Followingnum = findViewById(R.id.followingnum);
-
+        userintrotext = findViewById(R.id.userintroducetext);
         modify = findViewById(R.id.modifybtn);
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, ModifyProfileActivity.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 
@@ -163,10 +168,17 @@ public class ProfileActivity extends AppCompatActivity {
                     Postnum.setText(ID.getpost());
                     Follownum.setText(ID.getfollow());
                     Followingnum.setText(ID.getfollower());
+                    userintrotext.setText(ID.getUserintroduce());
+
+                    Glide.with(getApplicationContext())
+                            .load(ID.getprofileImageUrl())
+                            .apply(new RequestOptions()
+                            .signature(new ObjectKey("signature string"))
+                            .skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            ).into((ImageView)findViewById(R.id.profileimage));
 
 
-                    ImageLoadTask task = new ImageLoadTask(ID.getprofileImageUrl(),profileimg);
-                    task.execute();
 
                 } else {
                     Toast.makeText(ProfileActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
