@@ -25,6 +25,12 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:hint="password" />
+        <CheckBox
+            android:layout_marginHorizontal="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그인 정보 기억하기"
+            android:id="@+id/checkBox"/>
 
         <Button
             android:id="@+id/loginbtn"

@@ -1,5 +1,6 @@
 package com.example.sendwich.Regester;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -57,7 +58,10 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
 
         // Authentication, Database, Storage 초기화
-
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("ProgressDialog running...");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
@@ -109,9 +113,12 @@ public class InfoActivity extends AppCompatActivity {
 
 
         signup.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 signup();
+
             }
         });
 
@@ -179,6 +186,7 @@ public class InfoActivity extends AppCompatActivity {
         String email = useremail.getText().toString();
         String pw = userpw.getText().toString();
 
+
         // 프로필사진,이름,이메일,비밀번호 중 하나라도 비었으면 return
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
                 TextUtils.isEmpty(pw) || profile == null || pathUri==null) {
@@ -194,7 +202,6 @@ public class InfoActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) { // 회원가입 성공시
-
                                         // uid에 task, 선택된 사진을 file에 할당
                                         final String uid = task.getResult().getUser().getUid();
                                         final Uri file = Uri.fromFile(new File(pathUri)); // path

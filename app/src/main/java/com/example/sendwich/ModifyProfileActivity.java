@@ -1,10 +1,15 @@
 package com.example.sendwich;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -51,31 +56,31 @@ public class ModifyProfileActivity extends AppCompatActivity {
     private String[] mCategory = {"한식","영화","공원","빵집","병원","전자상가","대형마트","시장","관광명소","핫플레이스","일식","양식"};
     private boolean[] mCategorySelected = new boolean[mCategory.length];
     private TextView mTvCategory;
+    private int selectedsum=0;
     private AlertDialog mCategorySelectDialog;
     private String categorysum="";
     private  Uri file;
     private String pathUri;
-    private ArrayList<Dictionary2> mArrayList;
-    private ProfileAdapter mAdapter;
     private TextView Username, Useremail, Userintroduce, Userid;
-    private TextView Postnum, Follownum, Followingnum;
     private Button modify;
     private ImageView back,  check;
     private ImageView profileimg;
-    private Button sticker;
     private FirebaseStorage mStorage;
     private FirebaseDatabase mDatabase;
     private DatabaseReference rDatabase;
     private Uri imageUri;
     private File tempFile;
     private String Urlforme;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_profile);
 
-
-
-
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("ProgressDialog running...");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -122,7 +127,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                                     if (mCategorySelected[i])
                                     {
                                         categorysum = categorysum +". " + mCategory[i];
-
+                                        selectedsum+=1;
                                     }
                                 }
 
@@ -146,14 +151,16 @@ public class ModifyProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(ModifyProfileActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 finish();
+
+
             }
         });
 
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // 선택된 사진을 file에 할당
+                progressDialog.show();
                 if(pathUri!=null) {
                     file = Uri.fromFile(new File(pathUri)); // path
                     // 스토리지에 방생성 후 선택한 이미지 넣음
@@ -170,7 +177,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                             userModel.userintroduce = Userintroduce.getText().toString();
                             userModel.userName = Username.getText().toString();
                             userModel.profileImageUrl = imageUrl.getResult().toString();
-                            userModel.category = categorysum;
+
 
                             // database에 저장
                             mDatabase.getReference().child("users").child(uid).child("userintroduce")
@@ -179,18 +186,37 @@ public class ModifyProfileActivity extends AppCompatActivity {
                                     .setValue(userModel.userName);
                             mDatabase.getReference().child("users").child(uid).child("profileImageUrl")
                                     .setValue(userModel.profileImageUrl);
-
-                            Toast.makeText(ModifyProfileActivity .this,"프로필이 저장되었습니다.",Toast.LENGTH_SHORT).show();
-
+                            if(selectedsum!=0) {
+                                mDatabase.getReference().child("users").child(uid).child("category")
+                                        .setValue(userModel.category = categorysum);
+                            }
                         }
                     });
+                    Intent intent = new Intent(ModifyProfileActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else
                 {
-                    Toast.makeText(ModifyProfileActivity .this,"프로필 사진을 변경해주세요.",Toast.LENGTH_SHORT).show();
+                    UserModel userModel = new UserModel();
+                    userModel.userintroduce = Userintroduce.getText().toString();
+                    userModel.userName = Username.getText().toString();
 
+                    // database에 저장
+                    mDatabase.getReference().child("users").child(uid).child("userintroduce")
+                            .setValue(userModel.userintroduce);
+                    mDatabase.getReference().child("users").child(uid).child("userName")
+                            .setValue(userModel.userName);
+
+                    if(selectedsum!=0) {
+                        mDatabase.getReference().child("users").child(uid).child("category")
+                                .setValue(userModel.category = categorysum);
+                    }
+
+                    Intent intent = new Intent(ModifyProfileActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-                //파이어베이스에 수정내용 저장하기
             }
         });
 
@@ -287,4 +313,6 @@ public class ModifyProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
