@@ -29,7 +29,6 @@
         <activity android:name=".PostClickActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".ModifyProfileActivity"></activity>
-        <activity android:name=".firebasedata.TestActivity"></activity>
         <activity
             android:name=".IntroActivity"
             android:label="@string/app_name"
