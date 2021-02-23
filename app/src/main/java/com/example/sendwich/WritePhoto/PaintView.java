@@ -1,4 +1,4 @@
-package com.example.sendwich.Posts;
+package com.example.sendwich.WritePhoto;
 
 /*
  - 대표사진 만들기

@@ -32,7 +32,7 @@
         <activity android:name=".Profile.ProfileActivity"></activity>
         <activity android:name=".Profile.ModifyProfileActivity"></activity>
         <activity android:name=".firebasedata.TestActivity"></activity>
-        <activity android:name=".Posts.WritePhotoActivity"></activity>
+        <activity android:name=".WritePhoto.WritePhotoActivity"></activity>
         <activity
             android:name=".Intro.IntroActivity"
             android:label="@string/app_name"

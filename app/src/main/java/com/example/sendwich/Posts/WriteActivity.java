@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.sendwich.R;
+import com.example.sendwich.WritePhoto.WritePhotoActivity;
 import com.example.sendwich.write.Dictionary;
 import com.example.sendwich.write.WriteAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,6 +47,9 @@ import java.util.Date;
  글과 사진을 적어야 게시물 등록이 가능.
  아직 로그인을 안해서 아이디, 이름, UID 등 받아와야 함.
  사진은 등록하면 작게 미리보기 화면까지 구현했으나 X표시 delete 기능은 아직 미구현.
+
+ 사진은 최대 9장까지 가능
+ 사진 이름 저장하는 방법을 바꿔야 할 듯함.
  */
 
 public class WriteActivity extends AppCompatActivity {
@@ -61,18 +65,15 @@ public class WriteActivity extends AppCompatActivity {
 
     Uri imagePath1;
 
-    private ImageView delete;
-    private Button addbtn;
-    private ImageView back;
-    private Button upload;
-    private ImageView image;
-    private Button canvas;
+    private ImageView delete;   //사진 삭제 아직 미구현
+    private Button addbtn;  // 사진 + 추가하기 버튼
+    private ImageView back; //뒤로가기 버튼
+    private Button upload;  //업로드하기 버튼
+    private ImageView image;    //선택한 사진 보여주는 이미지뷰
+    private Button canvas;  //대표사진 만들기 버튼
 
-    private EditText edit;
-    private String msg;
-
-    private ImageView addimage;
-
+    private EditText edit;  // 사용자가 입력한 텍스트 받아오고
+    private String msg; //저장하기
     private ArrayList<Dictionary> mArrayList;
     private WriteAdapter mAdapter;
 
@@ -143,7 +144,7 @@ public class WriteActivity extends AppCompatActivity {
                 if (edit.getText().toString().length() == 0) { //공백이면
                     Toast.makeText(getApplicationContext(), "글을 작성해주세요", Toast.LENGTH_SHORT).show();
                 }
-                else if (number == 0) {
+                else if (number == 0) { //사진을 안올렸다면
                     Toast.makeText(getApplicationContext(), "사진을 한 장 이상 업로드 해주세요", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -239,7 +240,7 @@ public class WriteActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    private void uploadFile() {
+    private void uploadFile() { //사진 업로드 함수
         if (imagePath1 != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("업로드중...");

@@ -10,6 +10,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.InputStream;
 
+/*
+ 사진 띄우기 위한 Glide 모듈 추가
+ */
+
 @GlideModule
 public class MyAppGlideModule extends AppGlideModule {
     @Override
