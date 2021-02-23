@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.sendwich.PostClickActivity;
 import com.example.sendwich.R;
@@ -26,13 +27,20 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+/*
+선택 게시판 프래그먼트
+ */
+
 public class SelectFragment extends Fragment {
 
     private String name;
     private String time;
 
+    private int count=0;
+
     ArrayList<Post1> post1;
     ListView selectListView;
+    ArrayList<String> keys = new ArrayList<String>();
     private static SelectAdapter selectAdapter;
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -62,26 +70,30 @@ public class SelectFragment extends Fragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     name = datas.child("id").getValue(String.class);
                     time = datas.child("time").getValue(String.class);
 
-                    String key= datas.getKey();
-                    Log.d(TAG,"이름 => " + name);
-                    Log.d(TAG, "시간 => " + time);
+                    String key = datas.getKey();
+                    keys.add(key);
 
+                    count++;
                     post1.add(new Post1(name, time));
-
-
 
                     selectListView = (ListView) rootView.findViewById(R.id.select_list);
                     selectAdapter = new SelectAdapter(getContext(), post1);
                     selectListView.setAdapter(selectAdapter);
-
+                }
+                if(count >= 1){
                     selectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Toast.makeText(getContext(), "클릭 : " + position, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "키값22 => " + keys.get(position));
+
                             Intent intent = new Intent(getContext(), PostClickActivity.class);
+                            intent.putExtra("게시물키값", keys.get(position));
+
                             startActivity(intent);
                         }
                     });

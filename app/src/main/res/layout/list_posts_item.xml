@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:background="#2CE91E63"
+            android:background="#409C27B0"
             android:orientation="horizontal">
 
             <ImageView
@@ -26,7 +26,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
-                android:background="#fff000" />
+                android:background="#ffffff"
+                android:src="@drawable/user" />
 
             <TextView
                 android:id="@+id/userid"

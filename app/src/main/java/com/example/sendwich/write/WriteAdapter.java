@@ -1,5 +1,9 @@
 package com.example.sendwich.write;
 
+/*
+ - 게시물 작성하기에 여러장 사진 리스트뷰로 보여주는 어댑터
+ */
+
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;

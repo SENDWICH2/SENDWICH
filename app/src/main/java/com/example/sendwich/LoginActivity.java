@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sendwich.Regester.InfoActivity;
 import com.example.sendwich.function.boolid;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -57,7 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) //구글 회원가입 인증
+        ActionBar ab = getSupportActionBar();
+        ab.hide();  //액션바 숨기기
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
@@ -131,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ChoiceActivity.class);
+                Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
                 startActivity(intent);
             }
         });
@@ -252,8 +256,6 @@ public class LoginActivity extends AppCompatActivity {
         // apply, commit 을 안하면 변경된 내용이 저장되지 않음
         editor.apply();
     }
-
-    // 설정값을 불러오는 함수
     private void load() {
         // SharedPreferences 객체.get타입( 저장된 이름, 기본값 )
         // 저장된 이름이 존재하지 않을 시 기본값
@@ -261,5 +263,5 @@ public class LoginActivity extends AppCompatActivity {
         id = appData.getString("ID", "");
         pwd = appData.getString("PWD", "");
     }
-}
 
+}

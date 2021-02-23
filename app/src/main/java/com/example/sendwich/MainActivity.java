@@ -71,6 +71,12 @@ import noman.googleplaces.Place;
 import noman.googleplaces.PlaceType;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
+/*
+Auto place 자동완성 기능을 쓰려면 지도를 fragment말고 mapView를 써야한다는데
+다 갈아 엎어야 할지도 모르겠다.
+
+범위 번경가능, 변경 후 지도에서 장소 찾기 기능까지 구현
+ */
 
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback,
@@ -85,6 +91,8 @@ public class MainActivity extends AppCompatActivity
     Button logout;
     Button searchbtn;
     int distance;
+
+    private String placeee;
 
     private GoogleMap mMap;
     private Marker currentMarker = null;
@@ -169,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         String uid = user.getUid();
         String email = user.getEmail();
 
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,8 +225,7 @@ public class MainActivity extends AppCompatActivity
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.hotmarker:
-                                Toast.makeText(getApplicationContext(), "핫마커 클릭", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "핫마커");
+                                Log.d(TAG, "인기마커");
                                 if (item.isChecked()) {
                                     item.setChecked(false);
                                     Log.d(TAG, "체크 해제");
@@ -475,6 +483,11 @@ public class MainActivity extends AppCompatActivity
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
 
+        placeee = markerTitle;
+        Intent intent = new Intent(MainActivity.this, PostsActivity.class);
+
+        intent.putExtra("주소",placeee);
+        Log.d(TAG, "주소 ==>"+ placeee);
 
         currentMarker = mMap.addMarker(markerOptions);
 

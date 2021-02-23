@@ -26,12 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sendwich.Posts.Posting;
 import com.example.sendwich.write.Dictionary;
 import com.example.sendwich.write.WriteAdapter;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,6 +50,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*
+ - 게시물 작성하는 화면
+ 글과 사진을 적어야 게시물 등록이 가능.
+ 아직 로그인을 안해서 아이디, 이름, UID 등 받아와야 함.
+ 사진은 등록하면 작게 미리보기 화면까지 구현했으나 X표시 delete 기능은 아직 미구현.
+ */
+
 public class WriteActivity extends AppCompatActivity {
     public static final int PICK_FROM_MULTI_ALBUM = 4;
 
@@ -51,6 +65,8 @@ public class WriteActivity extends AppCompatActivity {
     private int count = 0;
 
     private String time1;
+    private int number;
+
 
     Uri imagePath1;
 
@@ -59,6 +75,7 @@ public class WriteActivity extends AppCompatActivity {
     private ImageView back;
     private Button upload;
     private ImageView image;
+    private Button canvas;
 
     private EditText edit;
     private String msg;
@@ -74,11 +91,11 @@ public class WriteActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReferenceFromUrl("gs://flugmediaworks-dba3f.appspot.com");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
-
 
         delete = findViewById(R.id.deletebtn);
 
@@ -91,7 +108,7 @@ public class WriteActivity extends AppCompatActivity {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler1);
         LinearLayoutManager mLinearLayoutManaget = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManaget);
-        mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL); //가로 리스트뷰
 
         mArrayList = new ArrayList<>();
 
@@ -102,20 +119,23 @@ public class WriteActivity extends AppCompatActivity {
                 mLinearLayoutManaget.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
+
         addbtn = (Button) findViewById(R.id.addpicbtn);
         addbtn.setOnClickListener(new View.OnClickListener() {  //사진 추가 버튼
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
+
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, PICK_FROM_MULTI_ALBUM);
+
             }
         });
 
         back = findViewById(R.id.backbtn);
-        back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() { //뒤로가기 버튼
             @Override
             public void onClick(View v) {
                 finish();
@@ -131,16 +151,48 @@ public class WriteActivity extends AppCompatActivity {
 
                 if (edit.getText().toString().length() == 0) { //공백이면
                     Toast.makeText(getApplicationContext(), "글을 작성해주세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    Posting Post = new Posting("tmddus2123", "이승연", msg, time1,"사진 이름", 3);
+                }
+                else if (number == 0) {
+                    Toast.makeText(getApplicationContext(), "사진을 한 장 이상 업로드 해주세요", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Posting Post = new Posting("tmddus2123", "이승연", msg, time1, number, 3);
                     databaseReference.child("posts").child("").push().setValue(Post);
-                    //databaseReference.child("posts").child("문서번호를 정하자").push().setValue(Post);
-                    //databaseReference.child("posts").child("방금 생성한 문서 번호 넣기").child("PicNum").setValue();
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                long i = datas.getChildrenCount();
+                                Log.d(TAG, String.valueOf(i));
+
+                                }
+                            }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                     finish();
+                    finish();
+                    Intent intent = new Intent(WriteActivity.this, PostsActivity.class);
+                    startActivity(intent);
                 }
             }
         });
         image = findViewById(R.id.prephoto);
+
+        canvas = findViewById(R.id.make);
+        canvas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WriteActivity.this, WritePhotoActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
     }
 
 
@@ -159,6 +211,7 @@ public class WriteActivity extends AppCompatActivity {
                 } else {
                     ClipData clipData = data.getClipData();
                     Log.i("clipdata", String.valueOf(clipData.getItemCount()));
+                    number = clipData.getItemCount();
 
                     if (clipData.getItemCount() > 9) {
                         Toast.makeText(WriteActivity.this, "사진은 9장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
@@ -167,10 +220,12 @@ public class WriteActivity extends AppCompatActivity {
                         File f1 = new File(String.valueOf(imagePath1));
                         Log.d(TAG, "uri => " + String.valueOf(f1));
                         try {
+                            count++;
                             Dictionary data1 = new Dictionary(clipData.getItemAt(0).getUri());
                             mArrayList.add(data1);
                             mAdapter.notifyDataSetChanged();
-                            uploadFile();//--> 사진 보이기
+                            uploadFile();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -183,6 +238,7 @@ public class WriteActivity extends AppCompatActivity {
                             mArrayList.add(data1);
                             mAdapter.notifyDataSetChanged();
                             uploadFile();
+
                         }
                         Log.d(TAG, "전체 이미지 경로 => " + clipData);
                         count = 0;
