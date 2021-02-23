@@ -7,8 +7,8 @@ import android.widget.ImageView;
 
 import java.net.URL;
 import java.util.HashMap;
-
-public class ImageLoadTask extends AsyncTask<Void,Void, Bitmap> {  //이미지 비트맵으로 불러오기, deprecated됨
+//이미지 비트맵으로 불러옴
+public class ImageLoadTask extends AsyncTask<Void,Void, Bitmap> {
 
     private String urlStr;
     private ImageView imageView;

@@ -22,7 +22,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.sendwich.Posts.PrefManager;
 import com.example.sendwich.R;
 
-//앱의 인트로 화면
+//앱의 인트로 화면 불러오는 액티비티
+//변수 명시적 파악 가능
 public class IntroActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;

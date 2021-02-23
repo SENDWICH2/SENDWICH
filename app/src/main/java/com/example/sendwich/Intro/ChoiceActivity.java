@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sendwich.R;
 import com.example.sendwich.Register.RegisterActivity;
 
-//미완성, 비즈니스 or 일반회원 구별 필요
+//미완성, 비즈니스 or 일반회원 구별하는 페이지
 public class ChoiceActivity extends AppCompatActivity {
 
     private Button business,commonuser;
 
-    //온크리에이트 시작
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

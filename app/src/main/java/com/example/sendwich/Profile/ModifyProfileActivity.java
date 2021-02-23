@@ -47,17 +47,18 @@ import static com.example.sendwich.Register.RegisterActivity.PICK_FROM_ALBUM;
 public class ModifyProfileActivity extends AppCompatActivity {    //회원가입 액티비티와 유사함
     private String[] mCategory = {"한식","영화","공원","빵집","병원","전자상가","대형마트"
             ,"시장","관광명소","핫플레이스","일식","양식"}; //카테고리 (후에 userdata 병합)
-    private boolean[] mCategorySelected = new boolean[mCategory.length];
-    private TextView mTvCategory;
-    private int selectedsum=0;
-    private AlertDialog mCategorySelectDialog;
-    private String categorysum="";
-    private  Uri file;
-    private String pathUri;
-    private TextView Username, Useremail, Userintroduce, Userid;
-    private Button modify;
-    private ImageView back,  check;
-    private ImageView profileimg;
+    private boolean[] mCategorySelected = new boolean[mCategory.length]; //선택된 카테고리 배열에 저장
+    private TextView mTvCategory;       //카테고리 선택 버튼
+    private int selectedsum=0;          //선택한 카테고리 개수(FOR문필요)
+    private AlertDialog mCategorySelectDialog; //다이얼로그 출력 변수
+    private String categorysum="";     //최종 저장할 카테고리 변수
+    private Uri file;                 //프로필 URI
+    private String pathUri;            //URI 경로
+    private TextView Username, Useremail, Userintroduce, Userid; //이름, 이메일, 자기소개
+    private ImageView back,  check;    //뒤로가기, 확인 버튼
+    private ImageView profileimg;       //프로필 이미지
+
+    //데이터베이스
     private FirebaseStorage mStorage;
     private FirebaseDatabase mDatabase;
     private DatabaseReference rDatabase;
@@ -92,12 +93,11 @@ public class ModifyProfileActivity extends AppCompatActivity {    //회원가입
         Username = findViewById(R.id.usernamechange);
         Useremail = findViewById(R.id.useremailchange);
         Userintroduce = findViewById(R.id.userintroducetext);
-        modify = findViewById(R.id.modifybtn);
         mTvCategory = (TextView) findViewById(R.id.tv_category);
-
-
         mTvCategory.setOnClickListener(new View.OnClickListener() {
             @Override
+
+            //카테고리 버튼 눌렀을때
             public void onClick(View view) {
                 mCategorySelectDialog.show();
             }
@@ -116,7 +116,7 @@ public class ModifyProfileActivity extends AppCompatActivity {    //회원가입
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                for (int i = 0; i < mCategory.length ; i++)
+                                for (int i = 0; i < mCategory.length ; i++)//for문을 통해 체크한 항목 추출
                                 {
                                     if (mCategorySelected[i])
                                     {
@@ -276,7 +276,7 @@ public class ModifyProfileActivity extends AppCompatActivity {    //회원가입
 
 
 
-    private void readUser(String userid){
+    private void readUser(String userid){ //유저 데이터 가져오기 - 수정가능한상태로 출력
         rDatabase.child("users").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

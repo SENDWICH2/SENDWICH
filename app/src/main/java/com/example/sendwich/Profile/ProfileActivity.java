@@ -30,18 +30,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
+//프로필 출력 액티비티
 public class ProfileActivity extends AppCompatActivity {
-    private ArrayList<Dictionary2> mArrayList;
-    private ProfileAdapter mAdapter;
-    private int count = -1;
-    private TextView Userid, Useremail, Profilecat;
-    private TextView Postnum, Follownum, Followingnum;
-    private Button modify;
-    private ImageView back, profileimg;
-    private Button sticker;
+    private TextView Userid, Useremail, Profilecat; //유저아이디, 이메일 ,카테고리
+    private TextView Postnum, Follownum, Followingnum;//게시글수, 팔로워수, 팔로잉수
+    private Button modify; //수정으로 넘어가기
+    private ImageView back, profileimg; //뒤로가기, 프로필이미지
     private DatabaseReference mDatabase;// ...
-    private TextView userintrotext;
+    private TextView userintrotext; //유저 자기소개 출력
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

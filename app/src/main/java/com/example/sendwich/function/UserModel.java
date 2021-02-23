@@ -1,8 +1,7 @@
 package com.example.sendwich.function;
-
+// 사용자 기본정보 틀
 public class UserModel {
-    // 사용자 기본정보
-
+        //데이터 형 바꿔야됨
     public String userName;         // 유저 이름(닉네임)
     public String profileImageUrl;  // 유저 프로필사진 url
     public String uid;              // 현재 사용자 회원 토큰

@@ -31,7 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
+//로그인 관리 액티비티
 public class LoginActivity extends AppCompatActivity {
     private boolean saveLoginData;  //로그인 저장 여부
 
@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button join;
     private SignInButton googleloginbtn;  //구글 버튼 (미완성)
 
+    //구글, 파이어베이스 회원 인증부 변수
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN=123;
     private FirebaseAuth mAuth = null;
@@ -63,12 +64,14 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.hide();  //액션바 숨기기
 
+        //구글 인증부
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        //로그인창 버튼
         googleloginbtn = findViewById(R.id.SignIn_Button);
         join = (Button) findViewById(R.id.registerbtn);
         checkBox = (CheckBox) findViewById(R.id.checkBox);

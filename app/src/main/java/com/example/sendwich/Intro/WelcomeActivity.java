@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sendwich.R;
 
-//오프닝 화면 띄우기
+//오프닝 로딩 화면 액티비티
 public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
