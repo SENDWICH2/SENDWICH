@@ -27,6 +27,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+/*
+선택 게시판 프래그먼트
+ */
+
 public class SelectFragment extends Fragment {
 
     private String name;

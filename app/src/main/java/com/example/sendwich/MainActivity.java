@@ -73,6 +73,12 @@ import noman.googleplaces.Place;
 import noman.googleplaces.PlaceType;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
+/*
+Auto place 자동완성 기능을 쓰려면 지도를 fragment말고 mapView를 써야한다는데
+다 갈아 엎어야 할지도 모르겠다.
+
+범위 번경가능, 변경 후 지도에서 장소 찾기 기능까지 구현
+ */
 
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback,

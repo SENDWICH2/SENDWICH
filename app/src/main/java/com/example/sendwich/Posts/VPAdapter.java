@@ -10,6 +10,10 @@ import com.example.sendwich.Posts.Select.SelectFragment;
 
 import java.util.ArrayList;
 
+/*
+ 뷰페이저 안에 들어가는 탭
+ */
+
 public class VPAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> items;
     private ArrayList<String> itext = new ArrayList<String>();
