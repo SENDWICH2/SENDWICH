@@ -1,6 +1,10 @@
 # SENDWICH
 
-### 사용 API : Maps SDK for Android, Places API
+### 사용 API : Maps SDK for Android, Places API, Identity Toolkit API, Firebase Installations API, Token Service API, Service Usage API, Cloud Firestore API
+               
+
+
+
 
 * MainActivity에서 showPlaceInformation함수에서 .key에 키값. --> Places API 
 * Manifest에서 meta-data에 valuer값에 key값. --> Maps SDK for Android
