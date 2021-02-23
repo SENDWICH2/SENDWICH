@@ -1,15 +1,11 @@
-package com.example.sendwich;
+package com.example.sendwich.Profile;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -29,10 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
-import com.example.sendwich.Profile.Dictionary2;
-import com.example.sendwich.Profile.ProfileAdapter;
-import com.example.sendwich.Regester.InfoActivity;
-import com.example.sendwich.function.ImageLoadTask;
+import com.example.sendwich.R;
 import com.example.sendwich.function.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,9 +41,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.util.ArrayList;
 
-import static com.example.sendwich.Regester.InfoActivity.PICK_FROM_ALBUM;
+import static com.example.sendwich.Register.RegisterActivity.PICK_FROM_ALBUM;
 
 public class ModifyProfileActivity extends AppCompatActivity {    //회원가입 액티비티와 유사함
     private String[] mCategory = {"한식","영화","공원","빵집","병원","전자상가","대형마트"

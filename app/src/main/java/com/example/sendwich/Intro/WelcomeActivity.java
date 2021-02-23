@@ -1,10 +1,12 @@
-package com.example.sendwich;
+package com.example.sendwich.Intro;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sendwich.R;
 
 //오프닝 화면 띄우기
 public class WelcomeActivity extends AppCompatActivity {

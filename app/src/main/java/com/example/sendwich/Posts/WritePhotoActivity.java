@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.Posts;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -7,6 +7,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sendwich.R;
 
 /*
 대표사진 만들기 화면

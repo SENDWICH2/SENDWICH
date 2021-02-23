@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.Intro;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +15,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.sendwich.Posts.PrefManager;
+import com.example.sendwich.R;
 
 //앱의 인트로 화면
 public class IntroActivity extends AppCompatActivity {

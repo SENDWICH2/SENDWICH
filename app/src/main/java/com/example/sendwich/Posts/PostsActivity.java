@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.Posts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.sendwich.Posts.VPAdapter;
+import com.example.sendwich.R;
 import com.google.android.material.tabs.TabLayout;
 
 /*

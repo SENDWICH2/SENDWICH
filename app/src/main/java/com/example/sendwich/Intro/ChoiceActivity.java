@@ -1,10 +1,12 @@
-package com.example.sendwich;
+package com.example.sendwich.Intro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.sendwich.Regester.InfoActivity;
+
+import com.example.sendwich.R;
+import com.example.sendwich.Register.RegisterActivity;
 
 //미완성, 비즈니스 or 일반회원 구별 필요
 public class ChoiceActivity extends AppCompatActivity {
@@ -25,7 +27,7 @@ public class ChoiceActivity extends AppCompatActivity {
         commonuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChoiceActivity.this, InfoActivity.class);
+                Intent intent = new Intent(ChoiceActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -33,7 +35,7 @@ public class ChoiceActivity extends AppCompatActivity {
         business.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChoiceActivity.this, InfoActivity.class);
+                Intent intent = new Intent(ChoiceActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

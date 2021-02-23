@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.Posts;
 
 /*
  - 대표사진 만들기
@@ -10,8 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;

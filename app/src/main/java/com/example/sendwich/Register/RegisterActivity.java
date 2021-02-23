@@ -1,4 +1,4 @@
-package com.example.sendwich.Regester;
+package com.example.sendwich.Register;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -35,7 +35,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 //회원가입 액티비티
-public class InfoActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     //카테고리
     private String[] mCategory = {"한식","영화","공원","빵집","병원","전자상가",
@@ -92,7 +92,7 @@ public class InfoActivity extends AppCompatActivity {
                 mCategorySelectDialog.show();
             }
         });
-        mCategorySelectDialog = new AlertDialog.Builder(InfoActivity.this )
+        mCategorySelectDialog = new AlertDialog.Builder(RegisterActivity.this )
                 .setMultiChoiceItems(mCategory, mCategorySelected, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) { //선택된 부분을 배열로 하여 저장
@@ -149,11 +149,11 @@ public class InfoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) { // 코드가 틀릴경우
-            Toast.makeText(InfoActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
             if (tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
-                        Toast.makeText(InfoActivity.this, "삭제 성공.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "삭제 성공.", Toast.LENGTH_SHORT).show();
                         tempFile = null;
                     }
                 }
@@ -197,7 +197,7 @@ public class InfoActivity extends AppCompatActivity {
         // 프로필사진,이름,이메일,비밀번호 중 하나라도 비었으면 return
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
                 TextUtils.isEmpty(pw) || profile == null || pathUri==null) {
-            Toast.makeText(InfoActivity.this, "정보를 바르게 입력해 주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "정보를 바르게 입력해 주세요.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -205,7 +205,7 @@ public class InfoActivity extends AppCompatActivity {
             // Authentication에 email,pw 생성
             mAuth.createUserWithEmailAndPassword(email, pw)
                     .addOnCompleteListener
-                            (InfoActivity.this, new OnCompleteListener<AuthResult>() {
+                            (RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) { // 회원가입 성공시
@@ -238,8 +238,8 @@ public class InfoActivity extends AppCompatActivity {
                                             }
                                         });
 
-                                        Toast.makeText(InfoActivity.this, "회원가입 성공.", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(InfoActivity.this, MainActivity.class);
+                                        Toast.makeText(RegisterActivity.this, "회원가입 성공.", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         ///UID 넘기기
                                         intent.putExtra("UID",uid);
                                         startActivity(intent);
@@ -247,7 +247,7 @@ public class InfoActivity extends AppCompatActivity {
 
                                     } else {
                                         if (task.getException() != null) { // 회원가입 실패시
-                                            Toast.makeText(InfoActivity.this, "회원가입 실패.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "회원가입 실패.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }

@@ -1,11 +1,9 @@
-package com.example.sendwich;
+package com.example.sendwich.Posts;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by Azhar Rivaldi on 04/02/2018.
- */
+
 
 public class PrefManager {
     SharedPreferences pref;

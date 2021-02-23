@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.sendwich.PostClickActivity;
+import com.example.sendwich.Posts.PostClickActivity;
 import com.example.sendwich.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

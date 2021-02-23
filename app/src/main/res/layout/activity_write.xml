@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".WriteActivity">
+    tools:context=".Posts.WriteActivity">
     <ImageView
         android:id="@+id/backbtn"
         android:layout_width="45dp"

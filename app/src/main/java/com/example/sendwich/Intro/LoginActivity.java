@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.Intro;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sendwich.Regester.InfoActivity;
+import com.example.sendwich.MainActivity;
+import com.example.sendwich.R;
+import com.example.sendwich.Register.RegisterActivity;
 import com.example.sendwich.function.boolid;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -135,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

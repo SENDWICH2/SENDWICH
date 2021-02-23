@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.example.sendwich.PaintView
+    <com.example.sendwich.Posts.PaintView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/paintView"/>

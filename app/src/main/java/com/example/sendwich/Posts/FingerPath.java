@@ -1,4 +1,4 @@
-package com.example.sendwich;
+package com.example.sendwich.Posts;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
