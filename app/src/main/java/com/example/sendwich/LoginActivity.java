@@ -30,45 +30,50 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
-    private boolean saveLoginData;
+    private boolean saveLoginData;  //로그인 저장 여부
+
+    //로그인 정보, 입력창
     private String id;
     private String pwd;
     private EditText idText, pwdText;
+
     private CheckBox checkBox;
     private Button loginBtn;
-    private SharedPreferences appData;
+
+    private SharedPreferences appData;    //다이얼로그
 
     private Button join;
-    private SignInButton googleloginbtn;
+    private SignInButton googleloginbtn;  //구글 버튼 (미완성)
+
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN=123;
     private FirebaseAuth mAuth = null;
     private String TAG="mainTag";
 
 
-    //온크리에이트 시작
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) //구글 회원가입 인증
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         googleloginbtn = findViewById(R.id.SignIn_Button);
         join = (Button) findViewById(R.id.registerbtn);
-
         checkBox = (CheckBox) findViewById(R.id.checkBox);
         loginBtn = (Button) findViewById(R.id.loginbtn);
-        appData = getSharedPreferences("appData", MODE_PRIVATE);
-        load();
-
-
         idText = (EditText) findViewById(R.id.Email);
         pwdText = (EditText) findViewById(R.id.password);
-        mAuth = FirebaseAuth.getInstance();
+
+        mAuth = FirebaseAuth.getInstance();   //파이어베이스 접근 권한
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);    //로딩 다이얼로그
+        load();
 
         if (saveLoginData) {
             idText.setText(id);
@@ -77,8 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        /////구글 로그인
-
+        //구글 로그인
         googleloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,8 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /////일반 로그인
-
+        //일반 로그인
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 String pwd = pwdText.getText().toString().trim();
                 String email1 = idText.getText().toString();
                 String pwd1 = pwdText.getText().toString();
+
                 if (boolid.isNull(email1)&& boolid.isNull(pwd1)) {
                     mAuth.signInWithEmailAndPassword(email, pwd)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -122,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
             }
         });
+
         ///회원가입하러가기
         join.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +136,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
     //구글 로그인 인증부
     // [START on_start_check_user]
     @Override

@@ -20,10 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * Created by Azhar Rivaldi on 04/02/2018.
- */
-
+//앱의 인트로 화면
 public class IntroActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -36,14 +33,12 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
         if (prefManager.isFirstTimeLaunch()) {            //if문 ! 추가하면 한 번 방문 이후로 안뜸
             launchHomeScreen();
 
         }
 
-        // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -59,7 +54,7 @@ public class IntroActivity extends AppCompatActivity {
 
         // layouts of all welcome sliders
         // add few more layouts if you want
-        layouts = new int[]{
+        layouts = new int[]{                  //레이아웃 추가 또는 제거
                 R.layout.welcome_slide1,
                 R.layout.welcome_slide2,
                 R.layout.welcome_slide3,
@@ -159,9 +154,7 @@ public class IntroActivity extends AppCompatActivity {
         }
     };
 
-    /**
-     * Making notification bar transparent
-     */
+
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -170,9 +163,7 @@ public class IntroActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * View pager adapter
-     */
+
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
 

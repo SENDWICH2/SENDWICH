@@ -52,8 +52,9 @@ import java.util.ArrayList;
 
 import static com.example.sendwich.Regester.InfoActivity.PICK_FROM_ALBUM;
 
-public class ModifyProfileActivity extends AppCompatActivity {
-    private String[] mCategory = {"한식","영화","공원","빵집","병원","전자상가","대형마트","시장","관광명소","핫플레이스","일식","양식"};
+public class ModifyProfileActivity extends AppCompatActivity {    //회원가입 액티비티와 유사함
+    private String[] mCategory = {"한식","영화","공원","빵집","병원","전자상가","대형마트"
+            ,"시장","관광명소","핫플레이스","일식","양식"}; //카테고리 (후에 userdata 병합)
     private boolean[] mCategorySelected = new boolean[mCategory.length];
     private TextView mTvCategory;
     private int selectedsum=0;
@@ -82,16 +83,17 @@ public class ModifyProfileActivity extends AppCompatActivity {
         progressDialog.setCancelable(true);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        mStorage = FirebaseStorage.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
-        rDatabase = FirebaseDatabase.getInstance().getReference();
-        mTvCategory = (TextView) findViewById(R.id.tv_category);
-
         ActionBar ab = getSupportActionBar();
         ab.hide();  //액션바 숨기기
 
+        //데이터베이스
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();    //현재 유저 승인
+        mStorage = FirebaseStorage.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        rDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+        mTvCategory = (TextView) findViewById(R.id.tv_category);
         profileimg = findViewById(R.id.profileimage);
         back = findViewById(R.id.backbtn);
         check = findViewById(R.id.checkbtn);
@@ -99,15 +101,15 @@ public class ModifyProfileActivity extends AppCompatActivity {
         Useremail = findViewById(R.id.useremailchange);
         Userintroduce = findViewById(R.id.userintroducetext);
         modify = findViewById(R.id.modifybtn);
-
         mTvCategory = (TextView) findViewById(R.id.tv_category);
+
+
         mTvCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCategorySelectDialog.show();
             }
         });
-
         mCategorySelectDialog = new AlertDialog.Builder(ModifyProfileActivity.this )
                 .setMultiChoiceItems(mCategory, mCategorySelected, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
@@ -139,28 +141,27 @@ public class ModifyProfileActivity extends AppCompatActivity {
 
 
 
-
-
-        String uid = user.getUid();
-
+        String uid = user.getUid();    //유저 데이터 불러오기
         readUser(uid);
 
+        //뒤로가기
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ModifyProfileActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 finish();
-
-
             }
         });
 
+
+        //회원정보 변경 확인
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 선택된 사진을 file에 할당
                 progressDialog.show();
+                //프로필 사진을 변경하는 경우
                 if(pathUri!=null) {
                     file = Uri.fromFile(new File(pathUri)); // path
                     // 스토리지에 방생성 후 선택한 이미지 넣음
@@ -196,6 +197,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+                //프로필 사진을 변경하지 않는 경우(조금더 깔끔한 정리 필요)
                 else
                 {
                     UserModel userModel = new UserModel();
@@ -220,6 +222,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
             }
         });
 
+
         profileimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,12 +232,14 @@ public class ModifyProfileActivity extends AppCompatActivity {
 
 
     }
+
     // 앨범 메소드
     private void gotoAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
+
     // uri 절대경로 가져오기
     public String getPath(Uri uri) {
 
@@ -285,6 +290,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
                 if(dataSnapshot.getValue(UserModel.class) != null){
+
                     //데이터베이스 참조부
                     UserModel ID = dataSnapshot.getValue(UserModel.class);
                     Username.setText(ID.getUserName());
