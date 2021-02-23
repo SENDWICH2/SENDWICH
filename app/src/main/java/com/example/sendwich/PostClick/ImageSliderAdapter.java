@@ -14,6 +14,11 @@ import com.example.sendwich.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/*
+ - 특정 게시물 들어가서 사진 스와이프 할때 사용할 어댑터
+ 아직 미구현.
+ */
+
 public class ImageSliderAdapter extends PagerAdapter {
     int[] images={};
     Context context;

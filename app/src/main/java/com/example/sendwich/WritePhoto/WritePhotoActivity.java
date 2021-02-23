@@ -1,4 +1,4 @@
-package com.example.sendwich.Posts;
+package com.example.sendwich.WritePhoto;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,7 +13,7 @@ import com.example.sendwich.R;
 /*
 대표사진 만들기 화면
 현재는 그냥 그림판기능만 구현되어 있음.
-인스타 스토리 올릴때 처럼 텍스트, 색, 효과, 스티커 등으로 꾸밀 수 있도록
+인스타 스토리 올릴 때처럼 텍스트, 색, 효과, 스티커 등으로 꾸밀 수 있도록
  */
 
 public class WritePhotoActivity extends AppCompatActivity {

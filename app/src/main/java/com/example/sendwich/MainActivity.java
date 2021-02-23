@@ -72,7 +72,7 @@ Auto place 자동완성 기능을 쓰려면 지도를 fragment말고 mapView를 
 다 갈아 엎어야 할지도 모르겠다.
 
 범위 번경가능, 변경 후 지도에서 장소 찾기 기능까지 구현
-현재 내 위치를 PostsActivity에 넘겨줘야 하는데 아직 
+현재 내 위치를 PostsActivity에 넘겨줘야 함.
  */
 
 public class MainActivity extends AppCompatActivity
@@ -86,15 +86,15 @@ public class MainActivity extends AppCompatActivity
     Button btn_save;
     Button btn_home;
     Button logout;
-    Button searchbtn;
-    int distance;
+    Button searchbtn;   //거리 이내에 장소 찾는 버튼
+    int distance;   //거리
 
-    private String placeee;
+    private String placeee; // PostsActivity에
 
     private GoogleMap mMap;
     private Marker currentMarker = null;
 
-    ImageView btn_filter;
+    ImageView btn_filter; //필터 이미지(버튼으로 사용)
 
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity
 
 
         btn_filter = findViewById(R.id.filterbtn);
-        btn_filter.setOnClickListener(new View.OnClickListener() {
+        btn_filter.setOnClickListener(new View.OnClickListener() {  //필터 거리 구현, 인기마커는 아직 미구현
             @Override
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(getApplicationContext(), v);

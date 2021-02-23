@@ -12,6 +12,10 @@ import com.example.sendwich.R;
 
 import java.util.ArrayList;
 
+/*
+ PostClickActivity에서 댓글 리스트뷰 어댑터
+ */
+
 public class PostClickAdapter extends BaseAdapter {
     private ArrayList<PostClickItem> postClickItemList = new ArrayList<PostClickItem>();
 
