@@ -72,10 +72,14 @@ import noman.googleplaces.PlaceType;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
 /*
+ - 메인 화면
+ 내 위치를 기준으로 반경 안에 게시물이 있으면 마커가 뜨도록 한다. 
+ 
 Auto place 자동완성 기능을 쓰려면 지도를 fragment말고 mapView를 써야한다는데
 다 갈아 엎어야 할지도 모르겠다.
 
 범위 번경가능, 변경 후 지도에서 장소 찾기 기능까지 구현
+현재 내 위치를 PostsActivity에 넘겨줘야 하는데 아직 
  */
 
 public class MainActivity extends AppCompatActivity
