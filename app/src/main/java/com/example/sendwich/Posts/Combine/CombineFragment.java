@@ -23,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+/*
+ 통합 게시판 프래그먼트
+ */
 
 public class CombineFragment extends Fragment {
 

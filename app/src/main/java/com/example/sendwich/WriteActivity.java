@@ -50,6 +50,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*
+ - 게시물 작성하는 화면
+ 글과 사진을 적어야 게시물 등록이 가능.
+ 아직 로그인을 안해서 아이디, 이름, UID 등 받아와야 함.
+ 사진은 등록하면 작게 미리보기 화면까지 구현했으나 X표시 delete 기능은 아직 미구현.
+ */
+
 public class WriteActivity extends AppCompatActivity {
     public static final int PICK_FROM_MULTI_ALBUM = 4;
 
@@ -101,7 +108,7 @@ public class WriteActivity extends AppCompatActivity {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler1);
         LinearLayoutManager mLinearLayoutManaget = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManaget);
-        mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL); //가로 리스트뷰
 
         mArrayList = new ArrayList<>();
 
@@ -128,7 +135,7 @@ public class WriteActivity extends AppCompatActivity {
         });
 
         back = findViewById(R.id.backbtn);
-        back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() { //뒤로가기 버튼
             @Override
             public void onClick(View v) {
                 finish();
@@ -161,7 +168,6 @@ public class WriteActivity extends AppCompatActivity {
 
                                 }
                             }
-
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {

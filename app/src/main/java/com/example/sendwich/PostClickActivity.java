@@ -39,6 +39,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.sendwich.PostClick.setListViewHeight.setListViewHeightBasedOnChildren;
+/*
+ - 게시물 클릭 시 나오는 화면
+ 댓글 작성 가능, 좋아요, 공유하기, 신고하기 버튼 등
+ 댓글기능 까지만 구현 (아이디 받아와야 함)
+
+ 사진은 아직 미구현 사진 여러장의 경우 스와이프 해서 사진 넘겨볼 수 있도록 해야 함.
+
+
+ 좋아요는 클릭만 되고 기능, 디비 연동 해야 함.
+ 공유하기도 클릭만 되고 기능.
+ 신고하기도 클릭만.
+ */
 
 public class PostClickActivity extends AppCompatActivity {
 

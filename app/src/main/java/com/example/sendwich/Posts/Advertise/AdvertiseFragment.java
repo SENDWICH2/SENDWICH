@@ -23,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+/*
+ Hot위치 프래그먼트
+ */
 
 public class AdvertiseFragment extends Fragment {
 

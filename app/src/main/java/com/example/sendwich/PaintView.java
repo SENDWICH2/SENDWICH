@@ -1,5 +1,10 @@
 package com.example.sendwich;
 
+/*
+ - 대표사진 만들기
+ 캔버스
+ */
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;

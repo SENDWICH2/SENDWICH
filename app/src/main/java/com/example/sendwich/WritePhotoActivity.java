@@ -8,6 +8,12 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/*
+대표사진 만들기 화면
+현재는 그냥 그림판기능만 구현되어 있음.
+인스타 스토리 올릴때 처럼 텍스트, 색, 효과, 스티커 등으로 꾸밀 수 있도록
+ */
+
 public class WritePhotoActivity extends AppCompatActivity {
     private PaintView paintView;
 

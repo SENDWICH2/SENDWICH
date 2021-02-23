@@ -14,6 +14,18 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.sendwich.Posts.VPAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+/*
+ - 게시물 화면
+ 뷰페이저로 3개의 탭을 구현.
+ 선택은 일반 사용자가 올린 게시물만 보는 탭.
+ 통합은 비즈니스와 일반 사용자 모두 올린 게시물을 보는 탭.
+ HOT 위치는 비즈니스 사용자가 올린 게시물만 보는 탭.
+
+ 그러나 아직 나누지 못했음. 로그인을 해서 일반인지 비즈니스인지 검사하고 분류하면 될 것.
+ 메인 화면에서 현재 내 위치 값을 받아와서 위에 EditText에 출력해야함. 그리고
+ EditText 클릭 시 위치 바꿀 수 있도록 함.
+ */
+
 public class PostsActivity extends AppCompatActivity {
 
     ImageView mPostbtn;
