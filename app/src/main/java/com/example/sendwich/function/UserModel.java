@@ -3,15 +3,15 @@ package com.example.sendwich.function;
 public class UserModel {
     // 사용자 기본정보
 
-    public String userName; // 사용자 이름(닉네임)
-    public String profileImageUrl; // 사용자 프로필사진
-    public String uid; // 현재 사용자(로그인한)
-    public String useremail;
-    public String follow;
-    public String follower;
-    public String postnum;
-    public String userintroduce;
-    public String category;
+    public String userName;         // 유저 이름(닉네임)
+    public String profileImageUrl;  // 유저 프로필사진 url
+    public String uid;              // 현재 사용자 회원 토큰
+    public String useremail;        // 유저 이메일
+    public String follow;           // 팔로우 수
+    public String follower;         // 팔로워 수
+    public String postnum;          // 게시글 수
+    public String userintroduce;    // 프로필 자기소개
+    public String category;         // 카테고리 선택사항
 
     //    public String pushToken;
     public UserModel() {

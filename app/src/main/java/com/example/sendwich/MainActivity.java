@@ -41,8 +41,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -176,9 +174,9 @@ public class MainActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         //유저아이디 가져오기
-//        String uid = user.getUid();
-//        String email = user.getEmail();
-//        readUser(uid);
+        String uid = user.getUid();
+        String email = user.getEmail();
+
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -457,7 +455,6 @@ public class MainActivity extends AppCompatActivity
 
         } else {
             Address address = addresses.get(0);
-
             return address.getAddressLine(0).toString();
         }
 
@@ -659,28 +656,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void readUser(String userid) {
-        mDatabase.child("users").child(userid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                if (dataSnapshot.getValue(UserModel.class) != null) {
-                    UserModel ID = dataSnapshot.getValue(UserModel.class);
 
-                    Log.w("FireBaseData", "getData" + ID.toString());
-                    uid_text.setText(ID.getUserName() + "님");
-                } else {
-                    Toast.makeText(MainActivity.this, "데이터 없음...", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
-            }
-        });
-    }
 
     @Override
     public void onPlacesFailure(PlacesException e) {

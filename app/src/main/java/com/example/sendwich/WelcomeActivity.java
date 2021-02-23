@@ -3,19 +3,19 @@ package com.example.sendwich;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * Created by Azhar Rivaldi on 04/02/2018.
- */
-
-
+//오프닝 화면 띄우기
 public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_up);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         Thread timerThread = new Thread(){
             public void run(){

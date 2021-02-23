@@ -47,10 +47,10 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView userintrotext;
 
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        //데이터베이스
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManaget);
         mLinearLayoutManaget.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        String uid = user.getUid();
+        String uid = user.getUid(); //유저 정보 읽기
         readUser(uid);
 
         Userid = findViewById(R.id.Idprof);
@@ -74,6 +74,8 @@ public class ProfileActivity extends AppCompatActivity {
         Followingnum = findViewById(R.id.followingnum);
         userintrotext = findViewById(R.id.userintroducetext);
         modify = findViewById(R.id.modifybtn);
+
+        //수정하기
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,8 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
+        //뒤로가기
         back = findViewById(R.id.backbtn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,72 +94,16 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-/*
-        mArrayList = new ArrayList<>();
-
-        mAdapter = new ProfileAdapter(mArrayList);
-        mRecyclerView.setAdapter(mAdapter);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                mLinearLayoutManaget.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-        Dictionary2 data = new Dictionary2();
-        mArrayList.add(data);
-        mArrayList.add(data);
-        mArrayList.add(data);
-        mArrayList.add(data);
-        mArrayList.add(data);
-
-        mAdapter.notifyDataSetChanged();
-
-        sticker = findViewById(R.id.stickerbtn);
-
-        ListView listView = findViewById(R.id.gridsticker);
-        StickerAdapter adapter = new StickerAdapter();
-
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        adapter.addItem(new StickerItem("asdf", "asdf"));
-        ListView.setAdapter(adapter);
-
-        sticker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAlertDialog();
-            }
-        });
-
-    }
-    public void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_sticker, null);
-        builder.setView(view);
-
-        final GridView gridView = (GridView)view.findViewById(R.id.gridsticker);
-        final AlertDialog dialog = builder.create();
-
-        //SimpleAdapter simpleAdapter = new SimpleAdapter(ProfileActivity.this, StickerItem, R.layout.list_dialog_sticker_item);
-
-        //gridView.setAdapter(simpleAdapter);
-        dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();*/
     }
 
+    //유저 정보 읽기
     private void readUser(String userid){
         mDatabase.child("users").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
                 if(dataSnapshot.getValue(UserModel.class) != null){
+
                     //데이터베이스 참조부
                     UserModel ID = dataSnapshot.getValue(UserModel.class);
                     Log.w("FireBaseData", "getData" + ID.toString());
